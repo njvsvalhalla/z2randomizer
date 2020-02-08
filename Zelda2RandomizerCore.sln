@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomizerApp", "Zelda2RandomizerCore\RandomizerApp.csproj", "{16A100EF-BB51-493E-B3B8-8A52BB49FE0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomizerCore", "RandomizerCore\RandomizerCore.csproj", "{45BEC663-3239-440C-940F-35018B3EFC15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RandomizerTests", "RandomizerTests\RandomizerTests.csproj", "{926D42DE-B653-4D4B-A865-D7F6A438E564}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomizerWeb", "RandomizerWeb\RandomizerWeb.csproj", "{61068DC2-CDD8-446A-9949-0714260275F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16A100EF-BB51-493E-B3B8-8A52BB49FE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A100EF-BB51-493E-B3B8-8A52BB49FE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A100EF-BB51-493E-B3B8-8A52BB49FE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A100EF-BB51-493E-B3B8-8A52BB49FE0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45BEC663-3239-440C-940F-35018B3EFC15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45BEC663-3239-440C-940F-35018B3EFC15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45BEC663-3239-440C-940F-35018B3EFC15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45BEC663-3239-440C-940F-35018B3EFC15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{926D42DE-B653-4D4B-A865-D7F6A438E564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{926D42DE-B653-4D4B-A865-D7F6A438E564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{926D42DE-B653-4D4B-A865-D7F6A438E564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{926D42DE-B653-4D4B-A865-D7F6A438E564}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61068DC2-CDD8-446A-9949-0714260275F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61068DC2-CDD8-446A-9949-0714260275F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61068DC2-CDD8-446A-9949-0714260275F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61068DC2-CDD8-446A-9949-0714260275F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44414E75-E563-4483-87BE-79C383BF22E5}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RandomizerApp": {
+      "commandName": "Project",
+      "commandLineArgs": "-r \"C:\\Users\\Neal\\Desktop\\Zelda II - The Adventure of Link (USA).nes\" -j \"C:\\Users\\Neal\\Desktop\\beginner.json\""
+    }
+  }
+}

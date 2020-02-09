@@ -30,6 +30,7 @@
                     }
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal">Got JSON?</button>
+
             </div>
 
             <div class="form-group">
@@ -44,7 +45,10 @@
                 <div class="col-md-4">
                     <label for="flags" id="flagsModal">Flags</label>
                     <input type="input" class="form-control" id="flags">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#flagsModal">Got flags to input?</button>
+
+                    <button id="modalActivate" type="button" class="btn btn-danger" data-toggle="modal" data-target="#inputModal">
+                        Got flags to input?
+                    </button>
                 </div>
             </div>
         </div>
@@ -60,7 +64,7 @@
                 <div class="card">
                     <div class="card-body text-left">
 
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartingItems, new { @class="flag1 usedForFlags" })
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartingItems, new { @class = "flag1 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleStartingItems, "Shuffle Starting Items")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.StartWithCandle, new { @class = "startingItem flag2 usedForFlags" })
@@ -131,22 +135,22 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-left">
-                        @Html.LabelFor(m => m.SettingsModel.StartingHeartContainers, "Starting Heart Containers", new {@class="usedForFlags"})
+                        @Html.LabelFor(m => m.SettingsModel.StartingHeartContainers, "Starting Heart Containers", new { @class = "usedForFlags" })
                         <select class="custom-select" asp-for="SettingsModel.StartingHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
                         <br />
-                        @Html.LabelFor(m => m.SettingsModel.MaxHeartContainers, "Maximum Heart Containers", new {@class="usedForFlags"})
+                        @Html.LabelFor(m => m.SettingsModel.MaxHeartContainers, "Maximum Heart Containers", new { @class = "usedForFlags" })
                         <select class="custom-select" asp-for="SettingsModel.MaxHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
                         <br />
-                        @Html.LabelFor(m => m.SettingsModel.StartingTechs, "Starting Tech", new {@class="usedForFlags"})
+                        @Html.LabelFor(m => m.SettingsModel.StartingTechs, "Starting Tech", new { @class = "usedForFlags" })
                         <select class="custom-select" asp-for="SettingsModel.StartingTechs" asp-items="Html.GetEnumSelectList<Enums.StartingTechs>()"></select>
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.HintType, "Hint Type")
                         <select class="custom-select" asp-for="SettingsModel.HintType" asp-items="Html.GetEnumSelectList<Enums.HintType>()"></select>
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.CommunityHints,new {@class="flag59 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.CommunityHints, new { @class = "flag59 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.CommunityHints, "Community Hints")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNumberOfLives, new {@class="flag22 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNumberOfLives, new { @class = "flag22 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.RandomizeNumberOfLives, "Random Number Of Lives")
                     </div>
                 </div>
@@ -160,19 +164,19 @@
                         Overworld
                     </div>
                     <div class="card-body">
-                        @Html.CheckBoxFor(m => m.SettingsModel.AllowPalacesToSwapContinents, new {@class="flag31 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.AllowPalacesToSwapContinents, new { @class = "flag31 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.AllowPalacesToSwapContinents, "Allow Palaces To Swap Continents")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.IncludeGreatPalaceInShuffle, new { @class = "greatPalaceInShuffle flag27 usedForFlags", @disabled = "disabled" })
                         @Html.LabelFor(m => m.SettingsModel.IncludeGreatPalaceInShuffle, "Include Great Palace In Shuffle")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEncounters, new {@class="flag29 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEncounters, new { @class = "flag29 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleEncounters, "Shuffle Encounters")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.AllowUnsafePathEncounters, new { @class = "unsafePathEncounters flag32 usedForFlags", @disabled = "disabled" })
                         @Html.LabelFor(m => m.SettingsModel.AllowUnsafePathEncounters, "Allow Unsafe Path Encounters")
                         <br />
-                        @Html.LabelFor(m => m.SettingsModel.HiddenPalace, "Hidden Palace", new {@class="usedForFlags"})
+                        @Html.LabelFor(m => m.SettingsModel.HiddenPalace, "Hidden Palace", new { @class = "usedForFlags" })
                         <select class="custom-select" asp-for="SettingsModel.HiddenPalace" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()"></select>
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.HiddenKasuto, "Hidden Kasuto")
@@ -187,7 +191,7 @@
                         Palaces
                     </div>
                     <div class="card-body">
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceRooms, new {@class="flag36 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceRooms, new { @class = "flag36 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShufflePalaceRooms, "Shuffle Palace Rooms")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.ShortenGreatPalace, new { @class = "flag44 usedForFlags palaceShuffleOptions shortenPalace", @disabled = "disabled" })
@@ -199,13 +203,13 @@
                         @Html.CheckBoxFor(m => m.SettingsModel.RemoveThunderbird, new { @class = "flag23 usedForFlags palaceShuffleOptions removeThunderbird", @disabled = "disabled" })
                         @Html.LabelFor(m => m.SettingsModel.RemoveThunderbird, "Remove Thunderbird")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ChangePalacePalettes, new {@class="flag28 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ChangePalacePalettes, new { @class = "flag28 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ChangePalacePalettes, "Change Palace Pallates")
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.NumberOfPalacesToComplete, "Number Of Palaces To Complete")
                         <select class="custom-select" asp-for="SettingsModel.NumberOfPalacesToComplete" asp-items="Html.GetEnumSelectList<Enums.Palaces>()"></select>
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.RestartAtPalacesIfGameOver, new {@class="flag43 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.RestartAtPalacesIfGameOver, new { @class = "flag43 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.RestartAtPalacesIfGameOver, "Restart At Palace On Game Over")
                         <br />
                     </div>
@@ -218,7 +222,7 @@
                         Levels and Spells
                     </div>
                     <div class="card-body">
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleAllExperienceNeeded, new {@class="flag38 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleAllExperienceNeeded, new { @class = "flag38 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleAllExperienceNeeded, "Shuffle All Experience Needed")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.ShuffleAttackExperienceNeeded, new { @class = "flag40 usedForFlags shuffleExperience" })
@@ -230,16 +234,16 @@
                         @Html.CheckBoxFor(m => m.SettingsModel.ShuffleLifeExperienceNeeded, new { @class = "flag41 usedForFlags shuffleExperience" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleLifeExperienceNeeded, "Shuffle Life Experience Needed")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleLifeRefill, new {@class="flag48 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleLifeRefill, new { @class = "flag48 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleLifeRefill, "Shuffle Life Refill Amount")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSpellLocations, new {@class="flag56 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSpellLocations, new { @class = "flag56 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleSpellLocations, "Shuffle Spell Locations")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.DisableMagicContainerRequirements, new {@class="flag57 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.DisableMagicContainerRequirements, new { @class = "flag57 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.DisableMagicContainerRequirements, "Disable Magic Container Requirements")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.CombineFireWithRandomSpell, new {@class="flag18 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.CombineFireWithRandomSpell, new { @class = "flag18 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.CombineFireWithRandomSpell, "Combine Fire With Random Spell")
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.AttackEffectiveness, "Attack Effectiveness")
@@ -263,34 +267,34 @@
                         Enemies
                     </div>
                     <div class="card-body">
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleOverworldEnemies,new { @class="flag6 usedForFlags"});
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleOverworldEnemies, new { @class = "flag6 usedForFlags" });
                         @Html.LabelFor(m => m.SettingsModel.ShuffleOverworldEnemies, "Shuffle Overworld Enemies")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceEnemies, new {@class="flag39 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceEnemies, new { @class = "flag39 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShufflePalaceEnemies, "Shuffle Palace Enemies")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleDripperEnemies, new {@class="flag35 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleDripperEnemies, new { @class = "flag35 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleDripperEnemies, "Shuffle Dripper Enemies")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.MixLargeAndSmallEnemies, new { @class = "flag51 usedForFlags mixEnemies", @disabled = "disabled" })
                         @Html.LabelFor(m => m.SettingsModel.MixLargeAndSmallEnemies, "Mix Large and Small Enemeies")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEnemyHP, new {@class="flag37 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEnemyHP, new { @class = "flag37 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleEnemyHP, "Shuffle Enemy HP")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEnemyExp,  new { @class = "flag12 usedForFlags" })
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEnemyExp, new { @class = "flag12 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleEnemyExp, "Shuffle Enemy Exp")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleBossExp, new {@class="flag24 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleBossExp, new { @class = "flag24 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleBossExp, "Shuffle Boss Exp")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleWhichEnemiesStealExp, new {@class="flag46 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleWhichEnemiesStealExp, new { @class = "flag46 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleWhichEnemiesStealExp, "Shuffle What Enemies Steal Experience")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleAmountExpStolen, new {@class="flag47 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleAmountExpStolen, new { @class = "flag47 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleAmountExpStolen, "Shuffle Amount Of Experience Stolen")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSwordImmunity, new {@class="flag49 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSwordImmunity, new { @class = "flag49 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleSwordImmunity, "Shuffle Sword Immunity")
                         <br />
                     </div>
@@ -302,10 +306,10 @@
                         Items
                     </div>
                     <div class="card-body">
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceItems, new {@class="flag52 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceItems, new { @class = "flag52 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShufflePalaceItems, "Shuffle Palace Items")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleOverworldItems, new {@class="flag53 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleOverworldItems, new { @class = "flag53 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleOverworldItems, "Shuffle Overworld Items")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.MixOverworldAndPalaceItems, new { @class = "flag54 usedForFlags mixOverworldItems", @disabled = "disabled" })
@@ -314,16 +318,16 @@
                         @Html.CheckBoxFor(m => m.SettingsModel.IncludePbagCavesInItemShuffle, new { @class = "shufflePbag flag26 userForFlags", @disabled = "disabled" })
                         @Html.LabelFor(m => m.SettingsModel.IncludePbagCavesInItemShuffle, "Include Pbag in Item Shuffle")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSmallItems, new {@class="flag55 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSmallItems, new { @class = "flag55 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleSmallItems, "Shuffle Small Items")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.PalacesContainsExtraKeys, new {@class="flag30 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.PalacesContainsExtraKeys, new { @class = "flag30 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.PalacesContainsExtraKeys, "Palaces Contain Extra Keys")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNewKasutoJarRequirements, new {@class="flag58 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNewKasutoJarRequirements, new { @class = "flag58 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.RandomizeNewKasutoJarRequirements, "Randomize Kasuto Jar Requirements")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.RemoveSpellItems, new {@class="flag62 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.RemoveSpellItems, new { @class = "flag62 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.RemoveSpellItems, "Remove Spell Items")
                         <br />
                     </div>
@@ -342,16 +346,16 @@
                         @Html.CheckBoxFor(m => m.SettingsModel.DisableMusic)
                         @Html.LabelFor(m => m.SettingsModel.DisableMusic, "Disable Music")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.JumpAlwaysOn, new {@class="flag50 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.JumpAlwaysOn, new { @class = "flag50 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.JumpAlwaysOn, "Jump Always On")
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.FastSpellCasting)
                         @Html.LabelFor(m => m.SettingsModel.FastSpellCasting, "Fast Spell Casting")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSpritePallate, new {@class="flag60 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleSpritePallate, new { @class = "flag60 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleSpritePallate, "Shuffle Sprite Palettes")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.PermanentBeamSword, new {@class="flag34 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.PermanentBeamSword, new { @class = "flag34 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.PermanentBeamSword, "Permanent Beam Sword")
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.CharacterSprite, "Character Sprite")
@@ -378,16 +382,16 @@
                         Drops
                     </div>
                     <div class="card-body">
-                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemDropFrequency, new {@class="flag25 userForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemDropFrequency, new { @class = "flag25 userForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ShuffleItemDropFrequency, "Shuffle Drop Frequency")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.ManuallySelectDrops, new {@class="flag61 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.ManuallySelectDrops, new { @class = "flag61 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.ManuallySelectDrops, "Manual Drop Selection")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.RandomizeDrops, new {@class="flag64 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.RandomizeDrops, new { @class = "flag64 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.RandomizeDrops, "Randomize Drops")
                         <br />
-                        @Html.CheckBoxFor(m => m.SettingsModel.StandardizeDrops, new {@class="flag63 usedForFlags"})
+                        @Html.CheckBoxFor(m => m.SettingsModel.StandardizeDrops, new { @class = "flag63 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.StandardizeDrops, "Standardize Drops")
                         <br />
                     </div>
@@ -463,24 +467,24 @@
     </div>
 </form>
 
-<form  method="post">
-    <div class="modal" tabindex="-2" role="dialog" id="flagsModal">
+<form method="post">
+    <div class="modal fade right" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Generate page from flags</h5>
+                    <h5 class="modal-title" id="inputModalLabel">Enter flags here</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label asp-for="InputFlags">Flags</label>
-                        <input type="file" class="form-control-file" asp-for="InputFlags">
+                        @Html.LabelFor(m => m.InputFlags, "Input Flags")
+                        @Html.EditorFor(m => m.InputFlags)
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input asp-page-handler="Flags" class="btn brin-primary" type="submit" value="Gimme my st">
+                    <input asp-page-handler="Flags" class="btn brin-primary" type="submit" value="Gimme my stuff">
                 </div>
             </div>
         </div>

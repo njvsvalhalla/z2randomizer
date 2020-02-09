@@ -105,8 +105,11 @@ namespace RandomizerWeb.Pages
         }
 
         public void OnPostFlags() {
+            PopulateItemDropPool();
+
             var randomizerSettings = new RandomizerSettings();
             randomizerSettings.GenerateFromFlags(InputFlags);
+            SettingsModel = randomizerSettings;
         }
 
         public IActionResult OnPostGetJson()

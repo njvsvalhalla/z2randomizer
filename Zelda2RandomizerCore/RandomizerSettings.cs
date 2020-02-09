@@ -470,10 +470,11 @@ namespace RandomizerApp
             return flagStr;
         }
 
-        public void GenerateFromFlags(string flags)
+        public void GenerateFromFlags(string inputFlags)
         {
-            var v = new BitArray(new int[] { flags.IndexOf(flags[0]) });
+            var v = new BitArray(new int[] { flags.IndexOf(inputFlags[0]) });
             var array = new int[1];
+            var s = v[0];
 
             ShuffleStartingItems = v[0];
             StartWithCandle = v[1];
@@ -482,7 +483,7 @@ namespace RandomizerApp
             StartWithBoots = v[4];
             ShuffleOverworldEnemies = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[1]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[1]) });
             StartWithFlute = v[0];
             StartWithCross = v[1];
             StartWithHammer = v[2];
@@ -490,7 +491,7 @@ namespace RandomizerApp
             ShuffleStartingSpells = v[4];
             ShuffleEnemyExp = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[2]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[2]) });
             StartWithShield = v[0];
             StartWithJump = v[1];
             StartWithLife = v[2];
@@ -498,7 +499,7 @@ namespace RandomizerApp
             StartWithFire = v[4];
             CombineFireWithRandomSpell = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[3]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[3]) });
             StartWithReflect = v[0];
             StartWithSpell = v[1];
             StartWithThunder = v[2];
@@ -506,7 +507,7 @@ namespace RandomizerApp
             RemoveThunderbird = v[4];
             ShuffleBossExp = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[4]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[4]) });
             BitArray w = new BitArray(3);
             w[0] = v[3];
             w[1] = v[4];
@@ -519,7 +520,7 @@ namespace RandomizerApp
             w[1] = v[1];
             w[2] = v[2];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[5]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[5]) });
             w[3] = v[2];
             w.CopyTo(array, 0);
             StartingHeartContainers = (Containers)array[0];
@@ -529,7 +530,7 @@ namespace RandomizerApp
             ChangePalacePalettes = v[4];
             ShuffleEncounters = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[6]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[6]) });
             PalacesContainsExtraKeys = v[0];
             AllowPalacesToSwapContinents = v[1];
             w = new BitArray(3);
@@ -540,7 +541,7 @@ namespace RandomizerApp
             AttackEffectiveness = (AttackEffectiveness)array[0];
             AllowUnsafePathEncounters = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[7]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[7]) });
             PermanentBeamSword = v[0];
             ShuffleDripperEnemies = v[1];
             ShufflePalaceRooms = v[2];
@@ -548,7 +549,7 @@ namespace RandomizerApp
             ShuffleAllExperienceNeeded = v[4];
             ShufflePalaceEnemies = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[8]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[8]) });
             ShuffleAttackExperienceNeeded = v[0];
             ShuffleLifeExperienceNeeded = v[1];
             ShuffleMagicExperienceNeeded = v[2];
@@ -556,7 +557,7 @@ namespace RandomizerApp
             ShortenGreatPalace = v[4];
             ThunderbirdRequired = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[9]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[9]) });
             w[0] = v[0];
             w[1] = v[1];
             w[2] = v[2];
@@ -566,7 +567,7 @@ namespace RandomizerApp
             ShuffleAmountExpStolen = v[4];
             ShuffleLifeRefill = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[10]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[10]) });
             ShuffleSwordImmunity = v[0];
             JumpAlwaysOn = v[1];
             w[0] = v[2];
@@ -576,7 +577,7 @@ namespace RandomizerApp
             NumberOfPalacesToComplete = (Palaces)array[0];
             MixLargeAndSmallEnemies = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[11]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[11]) });
             ShufflePalaceItems = v[0];
             ShuffleOverworldItems = v[1];
             MixOverworldAndPalaceItems = v[2];
@@ -584,7 +585,7 @@ namespace RandomizerApp
             ShuffleSpellLocations = v[4];
             DisableMagicContainerRequirements = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[12]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[12]) });
             w[0] = v[0];
             w[1] = v[1];
             w[2] = v[2];
@@ -594,7 +595,8 @@ namespace RandomizerApp
             CommunityHints = v[4];
             ShuffleSpritePallate = v[5];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[13]) });
+            w = new BitArray(4);
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[13]) });
             w[0] = v[0];
             w[1] = v[1];
             w[2] = v[2];
@@ -607,7 +609,7 @@ namespace RandomizerApp
             w.CopyTo(array, 0);
             HiddenPalace = (HiddenOptions)array[0];
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[14]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[14]) });
             w = new BitArray(2);
             w[0] = v[0];
             w[1] = v[1];
@@ -621,10 +623,10 @@ namespace RandomizerApp
 
             if (v[4])
                 SmallEnemyPool.Add(ItemPool.BlueJar);
-            if (v[4])
+            if (v[5])
                 SmallEnemyPool.Add(ItemPool.RedJar);
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[15]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[15]) });
             if (v[0])
                 SmallEnemyPool.Add(ItemPool.FiftyPbag);
             if (v[1])
@@ -638,7 +640,7 @@ namespace RandomizerApp
             if (v[5])
                 SmallEnemyPool.Add(ItemPool.Key);
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[16]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[16]) });
             if (v[0])
                 LargeEnemyPool.Add(ItemPool.BlueJar);
             if (v[1])
@@ -652,7 +654,7 @@ namespace RandomizerApp
             if (v[5])
                 LargeEnemyPool.Add(ItemPool.FiveHundredPbag);
 
-            v = new BitArray(new int[] { flags.IndexOf(flags[16]) });
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[17]) });
             if (v[0])
                 LargeEnemyPool.Add(ItemPool.OneUp);
             if (v[1])
@@ -664,7 +666,7 @@ namespace RandomizerApp
             w.CopyTo(array, 0);
             HintType = (HintType)array[0];
 
-            if (this.Flags != flags)
+            if (GenerateFlags() != inputFlags)
                 throw new Exception("Did not calculate flags correctly :(");
         }
 

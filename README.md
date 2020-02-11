@@ -23,12 +23,10 @@ I cleaned up some variable names, formatting, various commented out code (it's i
 
 * Output log (console app should be easy, have to think of how to handle web output logs)
 * Make colors work..
-* Various CI/"prod" stuff (have small things to finish, ie run unit tests on build, deploy to a staging area/prod - but this is moot since I'll probably move it to the cloud)
 * Unit test validation method
 * Add the other two presets
 * LOOOOOOOOOGS
 * I'd like to go into the core and move things into seperate classes (ie enums)
-* Tooltips
   
 ## Wishlist
 * Spoiler log??

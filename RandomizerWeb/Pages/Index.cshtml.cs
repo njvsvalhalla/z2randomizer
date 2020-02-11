@@ -54,7 +54,7 @@ namespace RandomizerWeb.Pages
             try
             {
                 SettingsModel =
-                    RandomizerSettingsFactory.Generate((Enums.Presets)Enum.Parse(typeof(Enums.Presets), id));
+                    RandomizerSettingsFactory.Generate(id);
             }
             catch
             {

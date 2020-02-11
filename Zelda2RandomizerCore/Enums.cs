@@ -7,12 +7,17 @@ namespace RandomizerApp
 {
     public class Enums
     {
-        public enum Presets
-        {
+        public enum RandomizerPresets {
+            [StringValue("jhmhMROm7DZ$cHRBTA")]
             Beginner,
+            [StringValue("jhhhDcM#$Za$LpTBT!")]
             Swiss,
+            [StringValue("hhAhC0j#x78gJqTBTR")]
             Finals,
-            Max
+            [StringValue("iyhqh$j#g7@$ZqTBT!")]
+            Max,
+            [StringValue("hhhhD0j#$Z8$JpTBT!")]
+            Bracket
         }
 
         public enum EnemySize
@@ -47,7 +52,7 @@ namespace RandomizerApp
             High,
             Invincible
         }
-        
+
         public enum ItemPool
         {
             [StringValue("Blue Jar")]

@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using static RandomizerApp.Enums;
+using RandomizerApp.Helpers;
 
 namespace RandomizerApp.Helpers
 {
     public class RandomizerSettingsFactory
     {
-        public static RandomizerSettings Generate(Presets preset)
+        public static RandomizerSettings Generate(string preset)
         {
-            return preset switch
-            {
-                Presets.Beginner => Beginner(),
-                Presets.Swiss => Swiss(),
-                Presets.Finals => Finals(),
-                Presets.Max => Max(),
-                _ => null,
-            };
+            var enumValue = ((RandomizerPresets)Enum.Parse(typeof(RandomizerPresets),preset)).GetStringValue();
+            return GenerateFromFlags(enumValue);
+        }
+
+        public static RandomizerSettings GenerateFromFlags(string flags) {
+            //I don't like generatefromflags there, will move it to here eventually
+            var settings =  new RandomizerSettings();
+            settings.GenerateFromFlags(flags);
+            return settings;
         }
 
         public static RandomizerSettings Beginner()

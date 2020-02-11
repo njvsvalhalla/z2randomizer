@@ -24,7 +24,7 @@
                     Load Preset
                 </button>
                 <div class="dropdown-menu">
-                    @foreach (var item in Enum.GetValues(typeof(Enums.Presets)))
+                    @foreach (var item in Enum.GetValues(typeof(Enums.RandomizerPresets)))
                     {
                         <a asp-route-handler="preset" asp-route-id="@item" class="dropdown-item">@item.ToString()</a>
                     }
@@ -35,7 +35,7 @@
 
             <div class="form-group">
                 <label asp-for="RomFile">Input file</label>
-                <input type="file" class="form-control-file" asp-for="RomFile">
+                <input type="file" class="form-control-file" asp-for="RomFile" accept=".nes">
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -135,17 +135,17 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body text-left">
-                        @Html.LabelFor(m => m.SettingsModel.StartingHeartContainers, "Starting Heart Containers", new { @class = "usedForFlags" })
-                        <select class="custom-select" asp-for="SettingsModel.StartingHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
+                        @Html.LabelFor(m => m.SettingsModel.StartingHeartContainers, "Starting Heart Containers")
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.StartingHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
                         <br />
-                        @Html.LabelFor(m => m.SettingsModel.MaxHeartContainers, "Maximum Heart Containers", new { @class = "usedForFlags" })
-                        <select class="custom-select" asp-for="SettingsModel.MaxHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
+                        @Html.LabelFor(m => m.SettingsModel.MaxHeartContainers, "Maximum Heart Containers")
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.MaxHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
                         <br />
-                        @Html.LabelFor(m => m.SettingsModel.StartingTechs, "Starting Tech", new { @class = "usedForFlags" })
-                        <select class="custom-select" asp-for="SettingsModel.StartingTechs" asp-items="Html.GetEnumSelectList<Enums.StartingTechs>()"></select>
+                        @Html.LabelFor(m => m.SettingsModel.StartingTechs, "Starting Tech")
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.StartingTechs" asp-items="Html.GetEnumSelectList<Enums.StartingTechs>()"></select>
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.HintType, "Hint Type")
-                        <select class="custom-select" asp-for="SettingsModel.HintType" asp-items="Html.GetEnumSelectList<Enums.HintType>()"></select>
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.HintType" asp-items="Html.GetEnumSelectList<Enums.HintType>()"></select>
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.CommunityHints, new { @class = "flag59 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.CommunityHints, "Community Hints")
@@ -176,11 +176,11 @@
                         @Html.CheckBoxFor(m => m.SettingsModel.AllowUnsafePathEncounters, new { @class = "unsafePathEncounters flag32 usedForFlags", @disabled = "disabled" })
                         @Html.LabelFor(m => m.SettingsModel.AllowUnsafePathEncounters, "Allow Unsafe Path Encounters")
                         <br />
-                        @Html.LabelFor(m => m.SettingsModel.HiddenPalace, "Hidden Palace", new { @class = "usedForFlags" })
-                        <select class="custom-select" asp-for="SettingsModel.HiddenPalace" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()"></select>
+                        @Html.LabelFor(m => m.SettingsModel.HiddenPalace, "Hidden Palace")
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.HiddenPalace" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()"></select>
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.HiddenKasuto, "Hidden Kasuto")
-                        <select class="custom-select" asp-for="SettingsModel.HiddenKasuto" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()"></select>
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.HiddenKasuto" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()"></select>
                         <br />
                     </div>
                 </div>
@@ -207,7 +207,7 @@
                         @Html.LabelFor(m => m.SettingsModel.ChangePalacePalettes, "Change Palace Pallates")
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.NumberOfPalacesToComplete, "Number Of Palaces To Complete")
-                        <select class="custom-select" asp-for="SettingsModel.NumberOfPalacesToComplete" asp-items="Html.GetEnumSelectList<Enums.Palaces>()"></select>
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.NumberOfPalacesToComplete" asp-items="Html.GetEnumSelectList<Enums.Palaces>()"></select>
                         <br />
                         @Html.CheckBoxFor(m => m.SettingsModel.RestartAtPalacesIfGameOver, new { @class = "flag43 usedForFlags" })
                         @Html.LabelFor(m => m.SettingsModel.RestartAtPalacesIfGameOver, "Restart At Palace On Game Over")
@@ -247,13 +247,13 @@
                         @Html.LabelFor(m => m.SettingsModel.CombineFireWithRandomSpell, "Combine Fire With Random Spell")
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.AttackEffectiveness, "Attack Effectiveness")
-                        <select class="custom-select" asp-for="SettingsModel.AttackEffectiveness" asp-items="Html.GetEnumSelectList<Enums.AttackEffectiveness>()"></select>
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.AttackEffectiveness" asp-items="Html.GetEnumSelectList<Enums.AttackEffectiveness>()"></select>
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.LifeEffectiveness, "Life Effectiveness")
-                        <select class="custom-select" asp-for="SettingsModel.LifeEffectiveness" asp-items="Html.GetEnumSelectList<Enums.LifeEffectiveness>()"></select>
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.LifeEffectiveness" asp-items="Html.GetEnumSelectList<Enums.LifeEffectiveness>()"></select>
                         <br />
                         @Html.LabelFor(m => m.SettingsModel.MagicEffectiveness, "Magic Effectiveness")
-                        <select class="custom-select" asp-for="SettingsModel.MagicEffectiveness" asp-items="Html.GetEnumSelectList<Enums.MagicEffectiveness>()"></select>
+                        <select class="custom-select usedForFlags" asp-for="SettingsModel.MagicEffectiveness" asp-items="Html.GetEnumSelectList<Enums.MagicEffectiveness>()"></select>
                         <br />
                     </div>
                 </div>

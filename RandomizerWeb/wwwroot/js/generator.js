@@ -83,7 +83,7 @@
 
         ba = BitArray([getValueFromDropdown('SettingsModel_MaxHeartContainers')]);
         baTwo = BitArray([getValueFromDropdown('SettingsModel_HiddenPalace')]);
-        flagStr += flag(BitArray([getFromBa(ba,0),getFromBa(ba,1),getFromBa(ba,2),getFromBa(baTwo,0),getFromBa(baTwo,1),getFromBa(baTwo,2)]));
+        flagStr += flag(BitArray([getFromBa(ba,0),getFromBa(ba,1),getFromBa(ba,2),getFromBa(ba,3),getFromBa(baTwo,0),getFromBa(baTwo,1)]));
 
         ba = BitArray([getValueFromDropdown('SettingsModel_HiddenKasuto')]);
         flagStr += flag(BitArray([getFromBa(ba,0),getFromBa(ba,1),getFlagId(61),getFlagId(62),getItemDropValue(0,'Small'),getItemDropValue(1,'Small')]));

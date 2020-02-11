@@ -24,7 +24,7 @@ namespace Zelda2RandomizerCore
         public string JsonPath { get; set; }
 
         [Option('p', "preset", Required = false, HelpText = "Use preset. 0-3 are valid. See documentation.")]
-        public int? Preset { get; set; }
+        public string Preset { get; set; }
 
         [Option('s', "Seed", Required = false, HelpText = "Generate random Seed (instead of json)")]
         public bool Seed { get; set; }
@@ -69,7 +69,7 @@ namespace Zelda2RandomizerCore
         {
             try
             {
-                var settings = RandomizerSettingsFactory.Generate((Presets)o.Preset.Value);
+                var settings = RandomizerSettingsFactory.Generate(o.Preset);
                 GenerateRom(settings, o);
             }
             catch (Exception e)
@@ -89,9 +89,6 @@ namespace Zelda2RandomizerCore
 
         private static void ValidateOptions(Options o)
         {
-            if (o.Preset != null && o.Preset > 3)
-                Error("Invalid preset");
-
             if (string.IsNullOrWhiteSpace(o.JsonPath) && o.Preset == null)
                 Error("You must specify a json file or preset");
 

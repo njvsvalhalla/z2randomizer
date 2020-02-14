@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RandomizerApp;
@@ -22,6 +23,12 @@ namespace RandomizerWeb.Pages
         [BindProperty] public RandomizerSettings SettingsModel { get; set; } = new RandomizerSettings();
         [BindProperty] public List<ItemPoolItem> SmallDropPool { get; set; } = new List<ItemPoolItem>();
         [BindProperty] public List<ItemPoolItem> LargeDropPool { get; set; } = new List<ItemPoolItem>();
+
+        public string Environment { get; set; }
+
+        public IndexModel(IConfiguration config) {
+            Environment = config.GetValue<string>("Environment");
+        }
 
         public void OnGet()
         {
@@ -93,7 +100,7 @@ namespace RandomizerWeb.Pages
         public async Task OnPostJson()
         {
             PopulateItemDropPool();
-            
+
             var json = "";
             using (var fileStream = JsonFile.OpenReadStream())
             using (var reader = new StreamReader(fileStream))
@@ -104,7 +111,8 @@ namespace RandomizerWeb.Pages
             SettingsModel = JsonConvert.DeserializeObject<RandomizerSettings>(json);
         }
 
-        public void OnPostFlags() {
+        public void OnPostFlags()
+        {
             PopulateItemDropPool();
 
             var randomizerSettings = new RandomizerSettings();

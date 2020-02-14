@@ -13,6 +13,14 @@
     <h1 class="display-4">Zelda II Randomizer</h1>
 </div>
 
+@if (Model.Environment == "DEV") {
+<div class="card">
+    <div class="card-body">
+        <h1>This is the dev/staging ground! If you want stable (what is in master) <a href="https://zeldaiirandomizer.com">click here!</a></h1>
+    </div>
+</div>
+}
+
 <form enctype="multipart/form-data" method="post">
     <div class="card">
         <div class="card-header">

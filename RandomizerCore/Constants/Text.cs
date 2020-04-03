@@ -4,7 +4,7 @@ namespace RandomizerCore.Text
 {
     public static class Text
     {
-        public static IEnumerable<string> WizardText => new List<string> {
+        public static string[] WizardText => new [] {
             "do you know$why we$stopped$the car?",
             "link...$i am your$father",
             "I like big$bots and i$cannot lie",
@@ -42,7 +42,7 @@ namespace RandomizerCore.Text
             "have you$heard my$mixtape"
         };
 
-        public static IEnumerable<string> BridgeText => new List<string> {
+        public static string[] BridgeText => new [] {
             "bagu said$what? that$jerk!",
             "try not$to drown",
             "who is$bagu? i$dont know$any bagu",
@@ -57,7 +57,7 @@ namespace RandomizerCore.Text
             "WRAAAAAAFT"
         };
 
-        public static IEnumerable<string> BaguText => new List<string> {
+        public static string[] BaguText => new [] {
             "have you$seen error$around?",
             "tell the$riverman$i said hes$an idiot",
             "i am bagu.$husband$of$baguette",
@@ -71,7 +71,7 @@ namespace RandomizerCore.Text
             "ASL?",
         };
 
-        public static IEnumerable<string> DownstabText => new List<string> {
+        public static string[] DownstabText => new [] {
             "stick them$with the$pointy end",
             "youll stab$your eye$out",
             "press down$you idiot",
@@ -84,7 +84,7 @@ namespace RandomizerCore.Text
             "you walked$past me&didnt you"
         };
 
-        public static IEnumerable<string> UpstabText => new List<string> {
+        public static string[] UpstabText => new [] {
             "bet you$wish this$was$downstab",
             "you$probably$wont need$this",
             "press up$you idiot",

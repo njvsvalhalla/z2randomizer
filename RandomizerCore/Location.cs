@@ -1,4 +1,5 @@
 ﻿using System;
+using RandomizerCore.Constants.Enums;
 
 namespace Z2Randomizer
 {

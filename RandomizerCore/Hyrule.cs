@@ -3740,6 +3740,21 @@ namespace Z2Randomizer
                 case "Ruto":
                     spriteObj = new RutoSprite();
                     break;
+                case "Yoshi":
+                    spriteObj = new YoshiSprite();
+                    break;
+                case "Olympia":
+                    spriteObj = new OlympiaSprite();
+                    break;
+                case "Miria":
+                    spriteObj = new MiriaSprite();
+                    break;
+                case "Dragonlord":
+                    spriteObj = new DragonlordSprite();
+                    break;
+                case "Crystalis":
+                    spriteObj = new CrystalisSprite();
+                    break;
             }
 
             if (spriteObj == null)
@@ -3776,7 +3791,6 @@ namespace Z2Randomizer
                         RomData.Put(0x36010 + i, (byte)sprite[i]);
                     }
                     RomData.Put(0x38010 + i, (byte)sprite[i]);
-
                 }
 
                 for (int i = 0; i < 0x20; i++)

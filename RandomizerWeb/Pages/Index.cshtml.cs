@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RandomizerApp;
 using RandomizerApp.Helpers;
+using RandomizerCore.Sprites;
 using Z2Randomizer;
 
 namespace RandomizerWeb.Pages

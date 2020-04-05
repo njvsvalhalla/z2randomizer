@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using RandomizerCore.Constants.Enums;
 
 
 namespace Z2Randomizer

@@ -1,0 +1,29 @@
+namespace RandomizerCore.Sprites
+{
+    public class {{name}}Sprite : ISprite
+    {
+        public string Name => "{{name}}";
+
+        public int[] Sprite => new[] { {{spriteArr}} };
+
+        public int[] OneUp => new[] { {{oneUpArr}} };
+
+        public int[] Head => new[] { {{headArr}} };
+
+        public int[] Raft => new[] { {{raftArr}} };
+
+        public int[] Beam => new int[] { };
+
+        public int[] Ow => new[] { {{owArr}} };
+
+        public int[] Title => new[] { {{titleArr}} };
+
+        public int[] Sleeper => new[] { {{sleeperArr}} };
+
+        public int[] EndOne => new[] { {{endOneArr}} };
+
+        public int[] EndTwo => new[] { {{endTwoArr}} };
+
+        public int[] EndThree => new[] { {{endThreeArr}} };
+    }
+}

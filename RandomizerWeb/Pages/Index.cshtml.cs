@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RandomizerApp;
 using RandomizerApp.Helpers;
+using RandomizerCore.Sprites;
 using Z2Randomizer;
 
 namespace RandomizerWeb.Pages
@@ -18,8 +19,6 @@ namespace RandomizerWeb.Pages
     public class IndexModel : PageModel
     {
         [BindProperty] public IFormFile RomFile { get; set; }
-        [BindProperty] public IFormFile JsonFile { get; set; }
-        [BindProperty] public string InputFlags { get; set; }
         [BindProperty] public RandomizerSettings SettingsModel { get; set; } = new RandomizerSettings();
         [BindProperty] public List<ItemPoolItem> SmallDropPool { get; set; } = new List<ItemPoolItem>();
         [BindProperty] public List<ItemPoolItem> LargeDropPool { get; set; } = new List<ItemPoolItem>();
@@ -55,20 +54,6 @@ namespace RandomizerWeb.Pages
             }
         }
 
-        public void OnGetPreset(string id)
-        {
-            PopulateItemDropPool();
-            try
-            {
-                SettingsModel =
-                    RandomizerSettingsFactory.Generate(id);
-            }
-            catch
-            {
-                //
-            }
-        }
-
         public IActionResult OnPostUpload()
         {
             if (SmallDropPool.Any(x => x.Selected))
@@ -96,33 +81,6 @@ namespace RandomizerWeb.Pages
                 return new FileStreamResult(rom.OutputStream, "application/octet-stream") { FileDownloadName = rom.FileName };
 
             }
-        }
-        public async Task OnPostJson()
-        {
-            PopulateItemDropPool();
-
-            var json = "";
-            using (var fileStream = JsonFile.OpenReadStream())
-            using (var reader = new StreamReader(fileStream))
-            {
-                json = await reader.ReadToEndAsync();
-            }
-
-            SettingsModel = JsonConvert.DeserializeObject<RandomizerSettings>(json);
-        }
-
-        public void OnPostFlags()
-        {
-            PopulateItemDropPool();
-
-            var randomizerSettings = new RandomizerSettings();
-            randomizerSettings.GenerateFromFlags(InputFlags);
-            SettingsModel = randomizerSettings;
-        }
-
-        public IActionResult OnPostGetJson()
-        {
-            return new FileStreamResult(new MemoryStream(System.Text.Encoding.ASCII.GetBytes(SettingsModel.ToJson())), "application/json");
         }
     }
 

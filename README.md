@@ -5,7 +5,7 @@
 
 I based this off of Z2Randomizer by digshake https://bitbucket.org/digshake/z2randomizer/
 
-I converted it to a console app and a web app. The console/web can generate a rom based on a json file as well as preset.
+I converted it to a console app and a web app. The console/web can generate a rom based flags as well as preset.
 
 ## What did I change?
 

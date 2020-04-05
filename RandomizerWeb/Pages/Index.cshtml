@@ -34,13 +34,9 @@
                 <div class="dropdown-menu">
                     @foreach (var item in Enum.GetValues(typeof(Enums.RandomizerPresets)))
                     {
-                        <a asp-route-handler="preset" asp-route-id="@item" class="dropdown-item">@item.ToString()</a>
+                        <a class="dropdown-item preset-item">@item.ToString()</a>
                     }
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal">Got JSON?</button>
-                <button id="modalActivate" type="button" class="btn btn-info" data-toggle="modal" data-target="#inputModal">
-                    Got flags to input?
-                </button>
             </div>
 
             <div class="form-group">
@@ -53,7 +49,7 @@
                     <input type="number" asp-for="SettingsModel.Seed" max="2147483647" min="1" class="form-control" id="seed">
                 </div>
                 <div class="col-md-4">
-                    <label for="flags" id="flagsModal">Flags</label>
+                    <label for="flags" id="flagsModal">Flags (You can type in here to update)</label>
                     <input type="input" class="form-control" id="flags">
                 </div>
             </div>
@@ -442,57 +438,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <input asp-page-handler="Upload" class="btn btn-primary" type="submit" value="Upload">
-            <input asp-page-handler="GetJson" class="btn btn-primary" type="submit" value="Get JSON">
-        </div>
-    </div>
-</form>
-
-<form enctype="multipart/form-data" method="post">
-    <div class="modal" tabindex="-1" role="dialog" id="modal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Upload JSON</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label asp-for="JsonFile">Input file</label>
-                        <input type="file" class="form-control-file" asp-for="JsonFile">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input asp-page-handler="Json" class="btn brin-primary" type="submit" value="Upload">
-
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-<form method="post">
-    <div class="modal fade right" id="inputModal" tabindex="-1" role="dialog" aria-labelledby="inputModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="inputModalLabel">Enter flags here</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.InputFlags, "Input Flags")
-                        @Html.EditorFor(m => m.InputFlags)
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input asp-page-handler="Flags" class="btn brin-primary" type="submit" value="Gimme my stuff">
-                </div>
-            </div>
+            <input asp-page-handler="Upload" class="btn btn-primary" type="submit" value="Upload" disabled>
         </div>
     </div>
 </form>

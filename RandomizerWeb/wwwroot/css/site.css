@@ -69,3 +69,43 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body{
+  background-color: #000;
+  background-image: url('../img/intro-background-stars.png');
+  background-image: url('https://tracker.randomania.net/z2r/images/z2-stars.png');
+  background-size: 240px 96px;
+  color: #fff;
+}
+
+.row{
+  margin-bottom: 1em;
+}
+
+.card{
+  background-color: transparent;
+}
+
+.card-header{
+  background: #7891F8 url('https://nesmaps.com/maps/Zelda2/21IslandPalace(Level3).png') no-repeat 100px -60px / 1500% ;
+  background-clip: padding-box;
+  box-sizing: content-box;
+  border: 8px solid #7891F8;
+  border-image: url('../img/border.png') 14 / 14px / 7px stretch;
+  border-image: url('https://tracker.randomania.net/z2r/images/border.png') 14 / 14px / 7px stretch;
+  padding: 16px;
+  text-shadow: 2px 2px 0 #000;
+  font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+.card-body{
+  background-clip: padding-box;
+  box-sizing: content-box;
+  border: 8px solid #7891F8;
+  border-image: url('../img/border.png') 14 / 14px / 7px stretch;
+  border-image: url('https://tracker.randomania.net/z2r/images/border.png') 14 / 14px / 7px stretch;
+  padding: 16px;
+}

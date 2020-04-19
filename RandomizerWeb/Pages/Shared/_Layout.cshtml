@@ -6,30 +6,40 @@
     <title>@ViewData["Title"] - RandomizerWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <link rel="preload" href="~/img/intro-background-stars.png" as="image" type="image/png">
+    <link rel="preload" href="~/img/alter.png" as="image" type="image/png">
+    <link rel="preload" href="~/img/border.png" as="image" type="image/png">
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Randomizer</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/About">About/Credits</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Changelog">Changelog</a>
-                        </li>
-                    </ul>
+        @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">Randomizer</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/About">About/Credits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Changelog">Changelog</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>*@
+        <div class="topnav">
+            <a asp-area="" asp-page="/Index">Randomizer</a>
+            <a asp-area="" asp-page="/About">About/Credits</a>
+            <a asp-area="" asp-page="/Changelog">Changelog</a>
+        </div>
     </header>
-    <div class="container" style="padding-bottom: 100px;">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -37,11 +47,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Release v1.2. Based on the <a href="https://bitbucket.org/digshake/z2randomizer/">randomizer by digshake.</a> My source code/changes <a href="https://github.com/njvsvalhalla/z2randomizer">here</a>
-            <br/>
-            I do not condone piracy. No ROMS are stored on this server nor are they cached. You must provide a ROM to use. Do not email me for links to them. I also store no logs of users.
-            <br />
-            Zelda is &copy; Nintendo.
+            <p>Release v1.3. Based on the <a href="https://bitbucket.org/digshake/z2randomizer/">randomizer by digshake.</a> My source code/changes <a href="https://github.com/njvsvalhalla/z2randomizer">here</a></p>
+            <p>Design by capt_uhu.</p>
+
+            <p>I do not condone piracy. No ROMS are stored on this server nor are they cached. You must provide a ROM to use. Do not email me for links to them. I also store no logs of users.</p>
+
+            <p>Zelda is &copy; Nintendo.</p>
         </div>
     </footer>
 

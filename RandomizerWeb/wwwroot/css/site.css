@@ -7,6 +7,33 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+.topnav {
+    background-color: #000;
+    overflow: hidden;
+  }
+  
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  /* Change the color of links on hover */
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+  }  
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
@@ -58,14 +85,253 @@ html {
   min-height: 100%;
 }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+  padding-top: 1em;
+}
+
+body {
+    background-color: #000;
+    background-image: url('../img/intro-background-stars.png');
+    background-size: 240px 96px;
+    color: #fff;
+}
+
+main{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(352px, 1fr));
+    grid-gap: 24px;
+}
+
+form{
+    display: contents;
+}
+
+
+.grid-full-width {
+    grid-column: 1 / -1;
+}
+
+.z2r-logo {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    margin: 20px 20px 32px;
+    justify-self: center;
+}
+
+.card {
+    background-color: transparent;
+    margin-bottom: 1em;
+}
+
+.card-header {
+    background-color: #7891F8;
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-clip: padding-box;
+    box-sizing: content-box;
+    border: 8px solid #7891F8;
+    border-image: url('../img/border.png') 14 / 14px / 7px stretch;
+    padding: 16px;
+    text-shadow: 2px 2px 0 #000;
+    font-family: 'Press Start 2P', Arial Black, Helvetica, sans-serif;
+    margin: 0;
+    position: relative;
+    z-index: 0;
+}
+
+.basics{
+    position: relative;
+}
+    .basics .card-header {
+        background-color: transparent;
+        text-shadow: 2px 2px 0 #7891f8;
+    }
+
+    .basics:after {
+        content: '';
+        background-image: url('../img/sleeping-characters.png');
+        background-repeat: no-repeat;
+        background-position: 0 25%;
+        position: absolute;
+        transform: translateX(-50%);
+        width: 64px;
+        height: 16px;
+        left: 50%;
+        top: -28px;
+        z-index: 1;
+        image-rendering: pixelated;
+    }
+
+    .basics .card-header:after {
+        content: url('../img/alter.png');
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: -8px;
+        z-index: -1;
+        image-rendering: pixelated;
+    }
+    .basics .card-header:before {
+        content: url('../img/fire.png');
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 90px;
+        z-index: -1;
+        animation: flames .16s infinite steps(1);
+        image-rendering: pixelated;
+    }
+
+        @keyframes flames {
+            from {
+                transform: translateX(-50%) rotateY(0);
+            }
+            50% {
+                transform: translateX(-50%) rotateY(180deg);
+            }
+            to {
+                transform: translateX(-50%) rotateY(0);
+            }
+        }
+
+.spells .card-header:after {
+    content: '';
+    background-image: url('../img/link-sprites.png');
+    background-position: 100%;
+    width: 32px;
+    height: 64px;
+    position: absolute;
+    right: 20px;
+    bottom: -4px;
+    z-index: -1;
+}
+
+.enemies .card-header:after {
+    content: url('../img/wizzrob.png');
+    position: absolute;
+    right: 20px;
+    bottom: -8px;
+    z-index: -1;
+}
+
+.starting-items .card-header:after {
+    content: '';
+    background-image: url('../img/link-sprites.png');
+    width: 32px;
+    height: 64px;
+    position: absolute;
+    right: 20px;
+    bottom: -4px;
+    z-index: -1;
+}
+
+.starting-items .card-header:before {
+    content: '';
+    background-image: url('../img/items.png');
+    background-position: 0 0;
+    background-size: 1000% 200%;
+    width: 16px;
+    height: 32px;
+    position: absolute;
+    right: 36px;
+    bottom: 60px;
+    z-index: -1;
+    animation: item-swap 32s steps(8, jump-none) infinite;
+}
+
+@keyframes item-swap {
+    from {
+        background-position-X: 0;
+    }
+
+    100% {
+        background-position-X: -112px;
+    }
+}
+
+.starting-spells .card-header:after {
+    content: url('../img/fairy-on.gif');
+    position: absolute;
+    right: 20px;
+    bottom: 8px;
+    z-index: -1;
+}
+
+.starting-stats .card-header:after {
+    content: '';
+    background-image: url('../img/link-sprites.png');
+    background-position: 50%;
+    width: 32px;
+    height: 64px;
+    position: absolute;
+    right: 20px;
+    bottom: -4px;
+    z-index: -1;
+}
+
+.starting-stats .card-header:before {
+    content: '';
+    background-image: url('../img/items.png');
+    background-position: 0 100%;
+    background-size: 500%;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 20px;
+    bottom: 60px;
+    z-index: -1;
+    animation: stat-item-swap 20s steps(5, jump-none) infinite;
+}
+
+@keyframes stat-item-swap {
+    from {
+        background-position-X: 0;
+    }
+    100% {
+        background-position-X: 100%;
+    }
+}
+
+.overworld .card-header {
+    background-image: url('../img/overworld.png');
+}
+
+.palaces .card-header {
+    background-image: url('../img/palaces.png');
+    background-position: top;
+}
+
+    .card-header:first-child {
+        border-radius: 0;
+    }
+
+.card-body {
+    background-clip: padding-box;
+    box-sizing: content-box;
+    border: 8px solid #7891F8;
+    border-image: url('../img/border.png') 14 / 14px / 7px stretch;
+    padding: 16px;
+}
+
+.or {
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    margin: 2em 2em 2em 6em;
+    text-shadow: 2px 2px 0 #7891f8;
+    text-transform: uppercase;
+}
+
+.sub-item{
+    margin-left: 2rem;
+}
+
+h6 {
+    font-size: .8em;
+    margin: 1rem 0;
+    font-family: 'Press Start 2P', Arial, Helvetica, sans-serif;
+    text-shadow: 1px 1px 0 #7891f8;
+    text-transform: uppercase;
+}
+
+.two-columns {
+    column-count: 2;
 }

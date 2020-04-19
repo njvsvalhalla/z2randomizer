@@ -86,7 +86,11 @@ namespace RandomizerApp
             [StringValue("Vase Lady")]
             VaseLady,
             Ruto,
-
+            Yoshi,
+            Olympia,
+            Miria,
+            Dragonlord,
+            Crystalis
         }
 
         public enum TunicColor

@@ -6,6 +6,11 @@
     <title>@ViewData["Title"] - RandomizerWeb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <link rel="preload" href="~/img/intro-background-stars.png" as="image" type="image/png">
+    <link rel="preload" href="~/img/alter.png" as="image" type="image/png">
+    <link rel="preload" href="~/img/border.png" as="image" type="image/png">
+
 </head>
 <body>
     <header>
@@ -21,12 +26,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/About">About/Credits</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Changelog">Changelog</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container" style="padding-bottom: 100px;">
+    <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -34,11 +42,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            I do not condone piracy. No ROMS are stored on this server nor are they cached. You must provide a ROM to use. Do not email me for links to them. I also store no logs of users.
-            <br/>
-            Based on the <a href="https://bitbucket.org/digshake/z2randomizer/">randomizer by digshake.</a> My source code/changes <a href="https://github.com/njvsvalhalla/z2randomizer">here</a>
-            <br/>
-            Zelda is &copy; Nintendo.
+            <p>Release v1.2. Based on the <a href="https://bitbucket.org/digshake/z2randomizer/">randomizer by digshake.</a> My source code/changes <a href="https://github.com/njvsvalhalla/z2randomizer">here</a></p>
+
+            <p>I do not condone piracy. No ROMS are stored on this server nor are they cached. You must provide a ROM to use. Do not email me for links to them. I also store no logs of users.</p>
+
+            <p>Zelda is &copy; Nintendo.</p>
         </div>
     </footer>
 

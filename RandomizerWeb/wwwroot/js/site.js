@@ -667,8 +667,10 @@
   function manuallySelectDrops() {
     if (document.getElementById("SettingsModel_ManuallySelectDrops").checked) {
       $(".itemDrops").attr("disabled", false);
+      $(".sub-item").show();
     } else {
       $(".itemDrops").attr("disabled", true);
+      $(".sub-item").hide();
     }
   }
 

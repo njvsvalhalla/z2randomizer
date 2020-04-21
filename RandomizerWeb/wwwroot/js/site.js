@@ -610,12 +610,14 @@
   function shufflePalaceRooms() {
     if (document.getElementById("SettingsModel_ShufflePalaceRooms").checked) {
       $(".palaceShuffleOptions").attr("disabled", false);
-      // $(".thunderbirdRequired").prop("checked", false);
+      $(".thunderbirdRequired").prop("checked", false);
+      generateFlags();
     } else {
-      // $(".thunderbirdRequired").prop("checked", true);
-      // $(".removeThunderbird").prop("checked", false);
-      // $(".shortenPalace").prop("checked", false);
+      $(".thunderbirdRequired").prop("checked", true);
+      $(".removeThunderbird").prop("checked", false);
+      $(".shortenPalace").prop("checked", false);
       $(".palaceShuffleOptions").attr("disabled", true);
+      generateFlags();
     }
   }
 
@@ -666,18 +668,46 @@
 
   function manuallySelectDrops() {
     if (document.getElementById("SettingsModel_ManuallySelectDrops").checked) {
-      $(".itemDrops").attr("disabled", false);
+      $(".itemDrops").attr("disabled", false);      
+      $(".sub-item").show();
     } else {
       $(".itemDrops").attr("disabled", true);
+      $(".sub-item").hide();
+      $(".itemDrops").prop("checked", false);
+      //this is only for a quick fix of an issue with flags I think this is gross
+      $("#SmallDropPool_0__Selected").prop("checked", true);
+      $("#SmallDropPool_2__Selected").prop("checked", true);
+      $("#LargeDropPool_1__Selected").prop("checked", true);
+      $("#LargeDropPool_4__Selected").prop("checked", true);
+      //force generate flags
+      generateFlags();
     }
   }
 
   $("input:file").change(function () {
     if ($(this).val()) {
-      $("input:submit").attr("disabled", false);
-      // or, as has been pointed out elsewhere:
-      // $('input:submit').removeAttr('disabled');
+      $(".submit").attr("disabled", false);
     }
+  });
+
+  $(".submit").click(function () {
+    var form = document.getElementById("form");
+    var formdata =  new FormData(form);
+    $.ajax({
+      url: "/?handler=Upload",
+      type: "POST",
+      data: formdata,
+      enctype: 'multipart/form-data',
+      processData: false,
+contentType: false,
+      success: function () {
+        alert('ok');
+      },
+      error: function () {
+        alert('not ok');
+
+      },
+    });
   });
 
   function updateEverything() {

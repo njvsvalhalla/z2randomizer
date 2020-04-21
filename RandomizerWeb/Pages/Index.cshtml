@@ -392,7 +392,7 @@
                     <div class="two-columns">
                         @for (var i = 0; i < Model.SmallDropPool.Count; i++)
                         {
-                            @Html.CheckBoxFor(m => m.SmallDropPool[i].Selected, new { @class = "itemDrops", @disabled = "disabled" })
+                            @Html.CheckBoxFor(m => m.SmallDropPool[i].Selected, new { @class = "itemDrops usedForFlags", @disabled = "disabled" })
                             @Html.LabelFor(m => m.SmallDropPool[i].Value, Model.SmallDropPool[i].Value)
                             @Html.HiddenFor(m => m.SmallDropPool[i].Enum)
 

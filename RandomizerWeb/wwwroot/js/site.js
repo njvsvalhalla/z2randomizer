@@ -686,28 +686,8 @@
 
   $("input:file").change(function () {
     if ($(this).val()) {
-      $(".submit").attr("disabled", false);
+        $("input:submit").attr("disabled", false);
     }
-  });
-
-  $(".submit").click(function () {
-    var form = document.getElementById("form");
-    var formdata =  new FormData(form);
-    $.ajax({
-      url: "/?handler=Upload",
-      type: "POST",
-      data: formdata,
-      enctype: 'multipart/form-data',
-      processData: false,
-contentType: false,
-      success: function () {
-        alert('ok');
-      },
-      error: function () {
-        alert('not ok');
-
-      },
-    });
   });
 
   function updateEverything() {

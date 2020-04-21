@@ -3,6 +3,12 @@
 
 [Use it!](https://zeldaiirandomizer.com)
 
+Dev
+[![Build status](https://dev.azure.com/z2randomizer/MyProject/_apis/build/status/z2randomizer%20-%201%20-%20CI)](https://dev.azure.com/z2randomizer/MyProject/_build/latest?definitionId=2)
+
+Prod
+[![Build status](https://dev.azure.com/z2randomizer/MyProject/_apis/build/status/z2randomizer%20-%202%20-%20CI)](https://dev.azure.com/z2randomizer/MyProject/_build/latest?definitionId=3)
+
 I based this off of Z2Randomizer by digshake https://bitbucket.org/digshake/z2randomizer/
 
 I converted it to a console app and a web app. The console/web can generate a rom based flags as well as preset.

@@ -6,6 +6,7 @@ using RandomizerCore.Constants;
 using RandomizerCore.Constants.Enums;
 using RandomizerCore.Constants.Places;
 using RandomizerCore.Constants.Towns;
+using RandomizerCore.ItemSprites;
 using RandomizerCore.Sprites;
 using RandomizerCore.Text;
 
@@ -561,10 +562,42 @@ namespace Z2Randomizer
             ProcessOverworld();
             DumpText();
 
+            if(Props.ShuffleItemSprites)
+                RandomizeItemSprites();
+
             UpdateRom();
         }
 
+        public void RandomizeItemSprites()
+        {
+            var sprites = ItemSprites.Sprites;
 
+            var usedSprites = new List<int>();
+
+            foreach (var sprite in sprites)
+            {
+                var newSpriteInt = R.Next(sprites.Count);
+
+                while (usedSprites.Contains(newSpriteInt))
+                {
+                    newSpriteInt = R.Next(sprites.Count);
+                }
+
+                var newSprite = sprites[newSpriteInt];
+                foreach (var startingOffset in sprite.StartingAddresses)
+                    UpdateSprite(startingOffset, newSprite.Sprite);
+
+                usedSprites.Add(newSpriteInt);
+            }
+        }
+
+        public void UpdateSprite(int startingOffset, int[] newSprite)
+        {
+            for (var i = 0; i < newSprite.Length; i++)
+            {
+                RomData.Put(startingOffset + i, (byte)newSprite[i]);
+            }
+        }
 
         /*
             Text Notes:

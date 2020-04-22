@@ -59,35 +59,35 @@
         </div>
         <div class="card-body text-left">
 
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartingItems, new { @class = "flag1 usedForFlags", @data_toggle = "tooltip", @title = "Each item has a 25% chance of being in your inventory" })
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartingItems, new {@class = "flag1 usedForFlags", @data_toggle = "tooltip", @title = "Each item has a 25% chance of being in your inventory"})
             @Html.LabelFor(m => m.SettingsModel.ShuffleStartingItems, "Shuffle Starting Items")
 
             <div class="or">or</div>
 
             <h6>Start with:</h6>
             <div class="item-options two-columns">
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCandle, new { @class = "startingItem flag2 usedForFlags", @data_toggle = "tooltip", @title = "Each spell has a 25% chance of being known" })
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCandle, new {@class = "startingItem flag2 usedForFlags", @data_toggle = "tooltip", @title = "Each spell has a 25% chance of being known"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithCandle, "Candle")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithGlove, new { @class = "startingItem flag3 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithGlove, new {@class = "startingItem flag3 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithGlove, "Glove")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithRaft, new { @class = "startingItem flag4 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithRaft, new {@class = "startingItem flag4 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithRaft, "Raft")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithBoots, new { @class = "startingItem flag5 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithBoots, new {@class = "startingItem flag5 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithBoots, "Boots")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithFlute, new { @class = "startingItem flag7 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithFlute, new {@class = "startingItem flag7 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithFlute, "Flute")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCross, new { @class = "startingItem flag8 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCross, new {@class = "startingItem flag8 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithCross, "Cross")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithHammer, new { @class = "startingItem flag9 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithHammer, new {@class = "startingItem flag9 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithHammer, "Hammer")
-                <br />
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithMagicKey, new { @class = "startingItem flag10 usedForFlags" })
+                <br/>
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithMagicKey, new {@class = "startingItem flag10 usedForFlags"})
                 @Html.LabelFor(m => m.SettingsModel.StartWithMagicKey, "Key")
             </div>
         </div>
@@ -302,6 +302,11 @@
             Items
         </div>
         <div class="card-body">
+
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @data_toggle = "tooltip", @title = "All item sprites have been shuffled! IE a p-bag might look like a candle" })
+            @Html.LabelFor(m => m.SettingsModel.ShuffleItemSprites, "Shuffle Item Sprites")
+            <br />
+
             @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceItems, new { @class = "flag52 usedForFlags" })
             @Html.LabelFor(m => m.SettingsModel.ShufflePalaceItems, "Shuffle Palace Items")
             <br />

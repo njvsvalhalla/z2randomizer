@@ -34,6 +34,9 @@ namespace RandomizerApp
         public bool StartWithHammer { get; set; }
         public bool StartWithMagicKey { get; set; }
 
+        public bool ShuffleItemSprites { get; set; }
+        public bool FunPercentSprites { get; set; }
+
         //spells
         //if this is checked don't allow spells
         public bool ShuffleStartingSpells { get; set; }
@@ -242,7 +245,9 @@ namespace RandomizerApp
                 InvincibleLifeEffectiveness = (LifeEffectiveness == LifeEffectiveness.Invincible),
                 RestartAtPalacesIfGameOver = RestartAtPalacesIfGameOver,
                 FreeMagicEffectiveness = (MagicEffectiveness == MagicEffectiveness.Free),
-                TunicColor = TunicColor.GetStringValue()
+                TunicColor = TunicColor.GetStringValue(),
+                ShuffleItemSprites = ShuffleItemSprites,
+                FunPercentSprites = FunPercentSprites
             };
             ItemPoolPopulate(LargeEnemyPool, EnemySize.Large, ref properties);
             ItemPoolPopulate(SmallEnemyPool, EnemySize.Small, ref properties);

@@ -556,6 +556,22 @@
     manuallySelectDrops();
   });
 
+  $("#SettingsModel_FunPercentSprites").change(function () {
+    if (document.getElementById("SettingsModel_FunPercentSprites").checked) {
+      $(".itemSpriteShuffle").attr("disabled", true);
+    } else {
+      $(".itemSpriteShuffle").attr("disabled", false);
+    }
+  });
+
+  $("#SettingsModel_ShuffleItemSprites").change(function () {
+    if (document.getElementById("SettingsModel_ShuffleItemSprites").checked) {
+      $(".funPercent").attr("disabled", true);
+    } else {
+      $(".funPercent").attr("disabled", false);
+    }
+  });
+
   function shuffleStartingItems() {
     if (document.getElementById("SettingsModel_ShuffleStartingItems").checked) {
       $(".startingItem").attr("disabled", true);

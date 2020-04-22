@@ -313,7 +313,7 @@ namespace RandomizerCore.ItemSprites
                 Cross,
                 Hammer,
                 Key,
-                //SmallKey, similar to the 1 up thing it gives it away with the pallette
+                SmallKey,
                 Pbag,
                 Jar
             };

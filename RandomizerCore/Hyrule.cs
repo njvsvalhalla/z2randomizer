@@ -562,15 +562,18 @@ namespace Z2Randomizer
             ProcessOverworld();
             DumpText();
 
-            if(Props.ShuffleItemSprites)
+            if (Props.ShuffleItemSprites)
                 RandomizeItemSprites();
+
+            if (Props.FunPercentSprites)
+                FunPercentSprites();
 
             UpdateRom();
         }
 
         public void RandomizeItemSprites()
         {
-            var sprites = ItemSprites.Sprites;
+            var sprites = ItemSprites.Sprites();
 
             var usedSprites = new List<int>();
 
@@ -589,6 +592,13 @@ namespace Z2Randomizer
 
                 usedSprites.Add(newSpriteInt);
             }
+        }
+
+        public void FunPercentSprites()
+        {
+            foreach (var startingOffset in ItemSprites.Sprites(true)
+                .SelectMany(sprite => sprite.StartingAddresses))
+                UpdateSprite(startingOffset, ItemSprites.BlankedSprite);
         }
 
         public void UpdateSprite(int startingOffset, int[] newSprite)
@@ -3744,6 +3754,8 @@ namespace Z2Randomizer
             }
         }
 
+        private ISprite NewSprite;
+
         private void UpdateSprites()
         {
             ISprite spriteObj = null;
@@ -3848,8 +3860,6 @@ namespace Z2Randomizer
                     RomData.Put(0x34a90 + i, (byte)s1Up[i]);
                     RomData.Put(0x36a90 + i, (byte)s1Up[i]);
                     RomData.Put(0x38a90 + i, (byte)s1Up[i]);
-
-
                 }
 
                 for (int i = 0; i < sOw.Count(); i++)

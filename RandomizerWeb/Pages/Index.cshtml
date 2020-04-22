@@ -264,7 +264,7 @@
             Enemies
         </div>
         <div class="card-body">
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleOverworldEnemies, new { @class = "flag6 usedForFlags" });
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleOverworldEnemies, new { @class = "flag6 usedForFlags" })
             @Html.LabelFor(m => m.SettingsModel.ShuffleOverworldEnemies, "Shuffle Overworld Enemies")
             <br />
             @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceEnemies, new { @class = "flag39 usedForFlags" })
@@ -303,8 +303,12 @@
         </div>
         <div class="card-body">
 
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @data_toggle = "tooltip", @title = "All item sprites have been shuffled! IE a p-bag might look like a candle" })
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @class="itemSpriteShuffle", @data_toggle = "tooltip", @title = "All item sprites (excluding Medicine etc) and drops been shuffled!" })
             @Html.LabelFor(m => m.SettingsModel.ShuffleItemSprites, "Shuffle Item Sprites")
+            <br />
+
+            @Html.CheckBoxFor(m => m.SettingsModel.FunPercentSprites, new { @class="funPercent", @data_toggle = "tooltip", @title = "All drops (except one ups) and items are replaced with a question mark! You won't know what you're getting." })
+            @Html.LabelFor(m => m.SettingsModel.FunPercentSprites, "Fun% Sprites")
             <br />
 
             @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaceItems, new { @class = "flag52 usedForFlags" })

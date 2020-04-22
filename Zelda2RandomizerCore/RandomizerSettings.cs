@@ -35,6 +35,7 @@ namespace RandomizerApp
         public bool StartWithMagicKey { get; set; }
 
         public bool ShuffleItemSprites { get; set; }
+        public bool FunPercentSprites { get; set; }
 
         //spells
         //if this is checked don't allow spells
@@ -245,7 +246,8 @@ namespace RandomizerApp
                 RestartAtPalacesIfGameOver = RestartAtPalacesIfGameOver,
                 FreeMagicEffectiveness = (MagicEffectiveness == MagicEffectiveness.Free),
                 TunicColor = TunicColor.GetStringValue(),
-                ShuffleItemSprites = ShuffleItemSprites
+                ShuffleItemSprites = ShuffleItemSprites,
+                FunPercentSprites = FunPercentSprites
             };
             ItemPoolPopulate(LargeEnemyPool, EnemySize.Large, ref properties);
             ItemPoolPopulate(SmallEnemyPool, EnemySize.Small, ref properties);

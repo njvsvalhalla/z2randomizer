@@ -23,6 +23,7 @@ namespace Z2Randomizer
         public bool StartWithHammer { get; set; }
         public bool StartWithKey { get; set; }
         public bool ShuffleItemSprites { get; set; }
+        public bool FunPercentSprites { get; set; }
 
         //Spells
         public bool ShuffleStartingSpells { get; set; }

@@ -144,7 +144,6 @@ namespace RandomizerApp.Helpers
             return new RandomizerSettings
             {
                 ShuffleStartingItems = true,
-                ShuffleItemSprites = false,
                 ShuffleStartingSpells = true,
                 StartingHeartContainers = Containers.Random,
                 MaxHeartContainers = Containers.Random,

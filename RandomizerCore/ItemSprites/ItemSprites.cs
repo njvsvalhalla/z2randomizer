@@ -9,13 +9,30 @@ namespace RandomizerCore.ItemSprites
     {
         public static int[] BlankedSprite =
         {
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+            0x00, 0x00, 0x7C, 0xC6, 0xC6, 0xC6, 0x0E, 0x18, 0x00, 0x00, 0x7C, 0xC6, 0xC6, 0xC6, 0x0E, 0x18, 0x18, 0x18, 0x18,
+            0x00, 0x18, 0x18, 0x00, 0x00, 0x18, 0x18, 0x18, 0x00, 0x18, 0x18, 0x00, 0x00
+        };
+
+        public static List<int> OneUpAddresses = new List<int>
+        {
+            0x20a90,
+            0x22a90,
+            0x24a90,
+            0x26a90,
+            0x28a90,
+            0x2aa90,
+            0x2ca90,
+            0x2ea90,
+            0x30a90,
+            0x32a90,
+            0x34a90,
+            0x36a90,
+            0x38a90
         };
 
         private static readonly ItemLocation Pbag = new ItemLocation
         {
-            Name =  "Pbag",
+            Name = "Pbag",
             StartingAddresses = new List<int>
             {
                 0x00020730,
@@ -63,11 +80,11 @@ namespace RandomizerCore.ItemSprites
 
         private static readonly ItemLocation Candle = new ItemLocation
         {
-            Name = "Camdle",
+            Name = "Candle",
             StartingAddresses = new List<int>
             {
                 0x000208D0,
-                0x000228D0,
+                //menu 0x000228D0
                 0x000248D0,
                 0x000268D0,
                 0x000288D0,
@@ -92,7 +109,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x000208F0,
-                0x000228F0,
+                //menu 0x000228F0,
                 0x000248F0,
                 0x000268F0,
                 0x000288F0,
@@ -116,7 +133,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x00020910,
-                0x00022910,
+                //menu 0x00022910,
                 0x00024910,
                 0x00026910,
                 0x00028910,
@@ -140,7 +157,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x00020930,
-                0x00022930,
+                //menu 0x00022930,
                 0x00024930,
                 0x00026930,
                 0x00028930,
@@ -165,7 +182,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x00020950,
-                0x00022950,
+                //menu 0x00022950,
                 0x00024950,
                 0x00026950,
                 0x00028950,
@@ -189,7 +206,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x00020970,
-                0x00022970,
+                //menu 0x00022970,
                 0x00024970,
                 0x00026970,
                 0x00028970,
@@ -213,7 +230,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x00020990,
-                0x00022990,
+                //menu 0x00022990,
                 0x00024990,
                 0x00026990,
                 0x00028990,
@@ -238,7 +255,7 @@ namespace RandomizerCore.ItemSprites
             StartingAddresses = new List<int>
             {
                 0x000209B0,
-                0x000229B0,
+                //menu 0x000229B0,
                 0x000249B0,
                 0x000269B0,
                 0x000289B0,
@@ -258,19 +275,50 @@ namespace RandomizerCore.ItemSprites
             }
         };
 
-        public static List<ItemLocation> Sprites = new List<ItemLocation>
+        private static readonly ItemLocation SmallKey = new ItemLocation
         {
-            Pbag,
-            Jar,
-            Candle,
-            Glove,
-            Raft,
-            Boots,
-            Horn, 
-            Cross,
-            Hammer,
-            Key
+            Name = "SmallKey",
+            StartingAddresses = new List<int>
+            {
+                0x00020670,
+                0x00022670,
+                0x00024670,
+                0x00026670,
+                0x00028670,
+                0x0002A670,
+                0x0002C9B0,
+                0x0002E9B0,
+                0x00030670,
+                0x00032670,
+                0x00034670,
+                0x00036670,
+                0x00038670
+            },
+
+            Sprite = new[] {
+                0x00, 0x3C, 0x40, 0x84, 0x82, 0x82, 0x00, 0x10, 0x00, 0x3C, 0x7E, 0xE7, 0xC3, 0xC3, 0xFF, 0x18, 0x10, 0x10, 0x10,
+                0x16, 0x10, 0x10, 0x10, 0x00, 0x18, 0x18, 0x18, 0x1E, 0x1E, 0x1E, 0x18, 0x00
+            }
         };
 
+        public static List<ItemLocation> Sprites(bool includeDrops = false)
+        {
+            var list = new List<ItemLocation>
+            {
+                Candle,
+                Glove,
+                Raft,
+                Boots,
+                Horn,
+                Cross,
+                Hammer,
+                Key,
+                //SmallKey, similar to the 1 up thing it gives it away with the pallette
+                Pbag,
+                Jar
+            };
+
+            return list;
+        }
     }
 }

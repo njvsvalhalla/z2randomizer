@@ -575,6 +575,9 @@ namespace Z2Randomizer
         {
             var sprites = ItemSprites.Sprites();
 
+            //debug code
+            //var spoiler = new Dictionary<string, string>();
+
             var usedSprites = new List<int>();
 
             foreach (var sprite in sprites)
@@ -587,8 +590,14 @@ namespace Z2Randomizer
                 }
 
                 var newSprite = sprites[newSpriteInt];
+
+                if (newSprite.Name == "OneUp" && _newSprite != null)
+                    newSprite.Sprite = _newSprite.OneUp;
+                    
                 foreach (var startingOffset in sprite.StartingAddresses)
                     UpdateSprite(startingOffset, newSprite.Sprite);
+
+                //spoiler.Add(sprite.Name,newSprite.Name);
 
                 usedSprites.Add(newSpriteInt);
             }
@@ -3754,7 +3763,7 @@ namespace Z2Randomizer
             }
         }
 
-        private ISprite NewSprite;
+        private ISprite _newSprite;
 
         private void UpdateSprites()
         {
@@ -3804,6 +3813,8 @@ namespace Z2Randomizer
 
             if (spriteObj == null)
                 return;
+
+            _newSprite = spriteObj;
 
             int[] sprite = spriteObj.Sprite;
             int[] s1Up = spriteObj.OneUp;

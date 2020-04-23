@@ -269,6 +269,8 @@
       ])
     );
 
+    flagStr += flag(BitArray([getFlagId(65), getFlagId(66)]));
+
     $("#flags").val(flagStr);
   }
 
@@ -439,6 +441,21 @@
     setSelectedIndex("#SettingsModel_HintType", arr[0]);
     setValue(63, v[4]);
     setValue(64, v[5]);
+
+    if (val[18] === undefined) {
+      setValue(65, false);
+      setValue(66, false);
+    } else {
+      v = getBitArray(indexOf(val[18]));
+      var dontProcess = false;
+      if (v[0] && v[1])
+        dontProcess = true;
+
+      if (!dontProcess){
+        setValue(65, v[0]);
+      setValue(66, v[1]);
+      }
+    }
 
     updateEverything();
     generateFlags();
@@ -684,7 +701,7 @@
 
   function manuallySelectDrops() {
     if (document.getElementById("SettingsModel_ManuallySelectDrops").checked) {
-      $(".itemDrops").attr("disabled", false);      
+      $(".itemDrops").attr("disabled", false);
       $(".sub-item").show();
     } else {
       $(".itemDrops").attr("disabled", true);
@@ -702,7 +719,7 @@
 
   $("input:file").change(function () {
     if ($(this).val()) {
-        $("input:submit").attr("disabled", false);
+      $("input:submit").attr("disabled", false);
     }
   });
 

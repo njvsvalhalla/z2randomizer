@@ -639,29 +639,57 @@
       $(".mixOverworldItems").prop("checked", false);
     }
   }
-
-  function shufflePalaceRooms() {
-    if (document.getElementById("SettingsModel_ShufflePalaceRooms").checked) {
-      $(".palaceShuffleOptions").attr("disabled", false);
-      $(".thunderbirdRequired").prop("checked", false);
-      generateFlags();
-    } else {
-      $(".thunderbirdRequired").prop("checked", true);
-      $(".removeThunderbird").prop("checked", false);
-      $(".shortenPalace").prop("checked", false);
-      $(".palaceShuffleOptions").attr("disabled", true);
-      generateFlags();
-    }
+  /*
+  if (palaceRoomBox.Checked)
+  {
+      gpBox.Enabled = true;
+      tbirdBox.Enabled = true;
+      tbirdBox.Checked = false;
   }
-
-  function removeThunderbird() {
-    if (document.getElementById("SettingsModel_RemoveThunderbird").checked) {
-      $(".thunderbirdRequired").attr("disabled", true);
-      $(".thunderbirdRequired").prop("checked", false);
-    } else {
-      $(".thunderbirdRequired").attr("disabled", false);
-    }
+  else
+  {
+      gpBox.Checked = false;
+      gpBox.Enabled = false;
+      tbirdBox.Enabled = false;
+      tbirdBox.Checked = true;
   }
+  */
+  // function shufflePalaceRooms() {
+  //   if (document.getElementById("SettingsModel_ShufflePalaceRooms").checked) {
+  //     // $(".palaceShuffleOptions").attr("disabled", false);
+  //     $(".thunderbirdRequired").prop("checked", false);
+  //     $(".thunderbirdRequired").attr("disabled", true);
+  //     $(".shortenPalace").attr("disabled", false);
+  //   } else {
+  //     $(".thunderbirdRequired").prop("checked", true);
+  //     $(".thunderbirdRequired").attr("disabled", true);
+  //     // $(".removeThunderbird").prop("checked", false);
+  //     $(".shortenPalace").prop("checked", false);
+  //     $(".shortenPalace").attr("disabled", true);
+  //     // $(".palaceShuffleOptions").attr("disabled", true);
+  //   }
+  //   // generateFlags();
+  // }
+
+  // function removeThunderbird() {
+  //   if (document.getElementById("SettingsModel_RemoveThunderbird").checked) {
+  //     $(".thunderbirdRequired").attr("disabled", true);
+  //     $(".thunderbirdRequired").prop("checked", false);
+  //   } else {
+  //     $(".thunderbirdRequired").attr("disabled", false);
+  //   }
+  //   // generateFlags();
+  // }
+
+  // function thunderbirdRequired() {
+  //   if (document.getElementById("SettingsModel_ThunderbirdRequired").checked) {
+  //     $(".removeThunderbird").attr("disabled", true);
+  //     $(".removeThunderbird").prop("checked", false);
+  //   } else {
+  //     $(".removeThunderbird").attr("disabled", false);
+  //   }
+  //   generateFlags();
+  // }
 
   function shuffleAllExperience() {
     if (
@@ -729,8 +757,9 @@
     allowPalacesToSwapContinents();
     shuffleEncounters();
     checkForMixOverworldShuffle();
-    shufflePalaceRooms();
-    removeThunderbird();
+    // removeThunderbird();
+    // shufflePalaceRooms();
+    // thunderbirdRequired();
     shuffleAllExperience();
     shuffleOverworldEnemies();
     shuffleOverworldItems();

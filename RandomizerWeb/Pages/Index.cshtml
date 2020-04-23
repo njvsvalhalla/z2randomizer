@@ -303,11 +303,11 @@
         </div>
         <div class="card-body">
 
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @class="itemSpriteShuffle", @data_toggle = "tooltip", @title = "All item sprites (excluding Medicine etc) and drops been shuffled!" })
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @class="usedForFlags flag65 itemSpriteShuffle", @data_toggle = "tooltip", @title = "All item sprites (excluding Medicine etc) and drops been shuffled!" })
             @Html.LabelFor(m => m.SettingsModel.ShuffleItemSprites, "Shuffle Item Sprites")
             <br />
 
-            @Html.CheckBoxFor(m => m.SettingsModel.FunPercentSprites, new { @class="funPercent", @data_toggle = "tooltip", @title = "All drops (except one ups) and items are replaced with a question mark! You won't know what you're getting." })
+            @Html.CheckBoxFor(m => m.SettingsModel.FunPercentSprites, new { @class="usedForFlags flag66 funPercent", @data_toggle = "tooltip", @title = "All drops (except one ups) and items are replaced with a question mark! You won't know what you're getting." })
             @Html.LabelFor(m => m.SettingsModel.FunPercentSprites, "Fun% Sprites")
             <br />
 

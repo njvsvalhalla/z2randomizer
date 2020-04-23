@@ -472,6 +472,12 @@ namespace RandomizerApp
             v.CopyTo(array, 0);
             flagStr = flagStr + flags[array[0]];
 
+            v = new BitArray(2);
+            v[0] = ShuffleItemSprites;
+            v[1] = FunPercentSprites;
+            v.CopyTo(array,0);
+            flagStr = flagStr + flags[array[0]];
+
             return flagStr;
         }
 

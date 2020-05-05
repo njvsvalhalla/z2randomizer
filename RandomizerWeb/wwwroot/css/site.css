@@ -89,11 +89,22 @@ html {
   padding-top: 1em;
 }
 
+div.topnav{
+    margin-bottom: 38px;
+}
+
 body {
     background-color: #000;
     background-image: url('../img/intro-background-stars.png');
     background-size: 240px 96px;
     color: #fff;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+.btn, .custom-select, input, .form-control{
+    border-radius: 0;
 }
 
 main{
@@ -102,20 +113,92 @@ main{
     grid-gap: 24px;
 }
 
-form{
+.hero{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.z2r-logo {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    justify-self: center;
+    width: 375px;
+    text-align: center;
+}
+
+    .z2r-logo img {
+        background-image: url('../img/header-sprite.png');
+        background-size: 275%;
+    }
+
+.alter-contain {
+    display: grid;
+    justify-items: center;
+}
+
+/* Fire */
+.fire-image {
+    align-self: end;
+    height: 32px;
+    width: 160px;
+    background-image: url('../img/items.png');
+    background-position: 0 128px;
+    background-size: 160px 96px;
+    animation: flames .16s infinite steps(1);
+}
+
+.alter-image {
+    background-image: url('../img/header-sprite.png');
+    background-position: 0 -68px;
+    width: 384px;
+    height: 96px;
+    align-self: start;
+    position: relative;
+}
+
+@keyframes flames {
+    from {
+        transform: rotateY(0);
+    }
+
+    50% {
+        transform: rotateY(180deg);
+    }
+
+    to {
+        transform: rotateY(0);
+    }
+}
+
+
+/* "Princess" */
+.alter-image:after {
+    content: '';
+    background-image: url('../img/header-sprite.png');
+    background-repeat: no-repeat;
+    background-position: -64px -164px;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 64px;
+    height: 16px;
+    left: 50%;
+    top: calc( var(--alter-top) + 6px);
+    z-index: 1;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+form {
     display: contents;
 }
 
 
 .grid-full-width {
     grid-column: 1 / -1;
-}
-
-.z2r-logo {
-    image-rendering: -moz-crisp-edges;
-    image-rendering: pixelated;
-    margin: 20px 20px 32px;
-    justify-self: center;
 }
 
 .card {
@@ -129,7 +212,7 @@ form{
     background-repeat: no-repeat;
     background-clip: padding-box;
     box-sizing: content-box;
-    border: 8px solid #7891F8;
+    border: 6px solid #7891F8;
     border-image: url('../img/border.png') 14 / 14px / 7px stretch;
     padding: 16px;
     text-shadow: 2px 2px 0 #000;
@@ -137,104 +220,99 @@ form{
     margin: 0;
     position: relative;
     z-index: 0;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }
 
-.basics{
+.header-decoration:after {
+    content: '';
+    position: absolute;
+    right: 20px;
+    bottom: -2px;
+    z-index: -1;
+}
+
+.basics {
     position: relative;
+    position: sticky;
+    top: -7px;
+    --alter-top: -38px;
+    z-index: 5;
+    background-color: rgba(0,0,0,.9);
+    background-image: url('../img/intro-background-stars.png');
+    background-size: 240px 96px;
 }
-    .basics .card-header {
-        background-color: transparent;
-        text-shadow: 2px 2px 0 #7891f8;
+
+    .basics .card-body {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        border: none;
     }
 
-    .basics:after {
-        content: '';
-        background-image: url('../img/sleeping-characters.png');
-        background-repeat: no-repeat;
-        background-position: 0 25%;
-        position: absolute;
-        transform: translateX(-50%);
-        width: 64px;
-        height: 16px;
-        left: 50%;
-        top: -28px;
-        z-index: 1;
-        image-rendering: pixelated;
+    .basics .card-body > div{
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(2, auto);
+        row-gap: 8px;
+        position: relative;
     }
 
-    .basics .card-header:after {
-        content: url('../img/alter.png');
-        position: absolute;
-        transform: translateX(-50%);
-        left: 50%;
-        bottom: -8px;
-        z-index: -1;
-        image-rendering: pixelated;
-    }
-    .basics .card-header:before {
-        content: url('../img/fire.png');
-        position: absolute;
-        transform: translateX(-50%);
-        left: 50%;
-        bottom: 90px;
-        z-index: -1;
-        animation: flames .16s infinite steps(1);
-        image-rendering: pixelated;
-    }
-
-        @keyframes flames {
-            from {
-                transform: translateX(-50%) rotateY(0);
-            }
-            50% {
-                transform: translateX(-50%) rotateY(180deg);
-            }
-            to {
-                transform: translateX(-50%) rotateY(0);
-            }
+        .basics .card-body > div:after {
+            content: '';
+            position: absolute;
+            right: -22px;
+            top: 20%;
+            height: 80%;
+            width: 1px;
+            background-image: repeating-linear-gradient(
+                                #0000a8 0 1px, transparent 0 8px,
+                                #3cbcfc 0 9px, transparent 0 16px,
+                                #fcfcfc 0 17px, transparent 0 24px, 
+                                #3cbcfc 0 25px, transparent 0 32px);
+        }
+        .basics .card-body > div label{
+            grid-column: span 2;
+            grid-row: 1;
+            margin-bottom: 0;
         }
 
-.spells .card-header:after {
-    content: '';
-    background-image: url('../img/link-sprites.png');
-    background-position: 100%;
-    width: 32px;
-    height: 64px;
-    position: absolute;
-    right: 20px;
-    bottom: -4px;
-    z-index: -1;
-}
+        .form-control-file{
+            width: 220px;
+        }
 
-.enemies .card-header:after {
-    content: url('../img/wizzrob.png');
-    position: absolute;
-    right: 20px;
-    bottom: -8px;
-    z-index: -1;
-}
+        .basics .btn-primary{
+            align-self: flex-end;
+        }
 
-.starting-items .card-header:after {
-    content: '';
-    background-image: url('../img/link-sprites.png');
-    width: 32px;
-    height: 64px;
-    position: absolute;
-    right: 20px;
-    bottom: -4px;
-    z-index: -1;
-}
+        .basics .form-group {
+            margin: 0;
+        }
 
+    .basics .form-control{
+        width: auto;
+    }
+
+    /* Starting Items */
+    .starting-items .card-header:after {
+        background-image: url('../img/link-sprites.png');
+        width: 32px;
+        height: 64px;
+    }
 .starting-items .card-header:before {
     content: '';
     background-image: url('../img/items.png');
     background-position: 0 0;
-    background-size: 1000% 200%;
+    background-size: 160px 96px;
     width: 16px;
     height: 32px;
     position: absolute;
     right: 36px;
-    bottom: 60px;
+    bottom: 62px;
     z-index: -1;
     animation: item-swap 32s steps(8, jump-none) infinite;
 }
@@ -249,38 +327,52 @@ form{
     }
 }
 
+/* Starting Spells */
 .starting-spells .card-header:after {
-    content: url('../img/fairy-on.gif');
+    content: '';
+    background-image: url('../img/items.png');
+    background-position: -144px 0;
+    background-size: 160px 96px;
+    width: 16px;
+    height: 32px;
     position: absolute;
-    right: 20px;
-    bottom: 8px;
+    right: 24px;
+    bottom: 12px;
     z-index: -1;
+    animation: flap .16s steps(1) infinite, hover 2s alternate ease-in-out infinite;
 }
 
+@keyframes flap {
+    from {background-position: -144px 0;}
+    50% {background-position: -128px 0;}
+    to {background-position: -144px 0;}
+}
+
+@keyframes hover{
+    from {transform: translateY(8px);}
+    to {transform: translateY(-8px);}
+}
+
+/* Starting stats */
 .starting-stats .card-header:after {
-    content: '';
     background-image: url('../img/link-sprites.png');
     background-position: 50%;
     width: 32px;
     height: 64px;
-    position: absolute;
-    right: 20px;
-    bottom: -4px;
-    z-index: -1;
 }
 
 .starting-stats .card-header:before {
     content: '';
     background-image: url('../img/items.png');
-    background-position: 0 100%;
+    background-position: 0 64px;
     background-size: 500%;
     width: 32px;
     height: 32px;
     position: absolute;
     right: 20px;
-    bottom: 60px;
+    bottom: 62px;
     z-index: -1;
-    animation: stat-item-swap 20s steps(5, jump-none) infinite;
+    animation: stat-item-swap 30s steps(4, jump-none) infinite;
 }
 
 @keyframes stat-item-swap {
@@ -288,22 +380,56 @@ form{
         background-position-X: 0;
     }
     100% {
-        background-position-X: 100%;
+        background-position-X: 75%;
     }
 }
 
 .overworld .card-header {
-    background-image: url('../img/overworld.png');
+    background-image: url('../img/heading-backgrounds.png');
+    background-position: 0 -8px;
+    background-repeat: no-repeat;
 }
 
 .palaces .card-header {
-    background-image: url('../img/palaces.png');
-    background-position: top;
+    background-image: url('../img/heading-backgrounds.png');
+    background-position: 0 -81px;
+    background-repeat: no-repeat;
 }
 
     .card-header:first-child {
         border-radius: 0;
     }
+
+/* Alter */
+.spells .card-header:after {
+    background-image: url('../img/link-sprites.png');
+    background-position: 100%;
+    width: 32px;
+    height: 64px;
+}
+/* Wizzrob */
+.enemies .card-header:after {
+    background-image: url('../img/wizzrob.png');
+    width: 58px;
+    height: 96px;
+}
+
+/* Player sprite */
+.player-sprite .card-header:after {
+    background-image: url('../img/sprite-color-choice.png');
+    width: 32px;
+    height: 64px;
+    animation: link-rotate 30s steps(11, jump-none) infinite;
+}
+
+@keyframes link-rotate{
+    from {
+        background-position-X: 0;
+    }
+    100% {
+        background-position-X: -320px;
+    }  
+}
 
 .card-body {
     background-clip: padding-box;
@@ -311,6 +437,9 @@ form{
     border: 8px solid #7891F8;
     border-image: url('../img/border.png') 14 / 14px / 7px stretch;
     padding: 16px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
 }
 
 .or {

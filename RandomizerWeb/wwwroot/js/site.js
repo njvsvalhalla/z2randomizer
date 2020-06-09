@@ -274,6 +274,7 @@
             ])
         );
 
+        flagStr += flag(BitArray([getFlagId(65), getFlagId(66)]));
         $("#flags").val(flagStr);
     }
 
@@ -446,6 +447,21 @@
         setValue(63, v[4]);
         setValue(64, v[5]);
 
+        if (val[18] === undefined) {
+            setValue(65, false);
+            setValue(66, false);
+        } else {
+            v = getBitArray(indexOf(val[18]));
+            var dontProcess = false;
+            if (v[0] && v[1])
+                dontProcess = true;
+
+            if (!dontProcess) {
+                setValue(65, v[0]);
+                setValue(66, v[1]);
+            }
+        }
+      
         updateEverything();
         dontGenerate = false;
         generateFlags();

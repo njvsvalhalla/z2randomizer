@@ -274,6 +274,7 @@
             ])
         );
 
+        flagStr += flag(BitArray([getFlagId(65), getFlagId(66)]));
         $("#flags").val(flagStr);
     }
 
@@ -446,6 +447,21 @@
         setValue(63, v[4]);
         setValue(64, v[5]);
 
+        if (val[18] === undefined) {
+            setValue(65, false);
+            setValue(66, false);
+        } else {
+            v = getBitArray(indexOf(val[18]));
+            var dontProcess = false;
+            if (v[0] && v[1])
+                dontProcess = true;
+
+            if (!dontProcess) {
+                setValue(65, v[0]);
+                setValue(66, v[1]);
+            }
+        }
+      
         updateEverything();
         dontGenerate = false;
         generateFlags();
@@ -456,6 +472,7 @@
     }
 
     function setValue(id, val) {
+        //console.log('id: ' + id + " val" + getRealVal(val));
         $(`.flag${id}`).prop("checked", getRealVal(val));
     }
 
@@ -499,24 +516,14 @@
     });
 
     $(".preset-item").click(function () {
-        var clicked = $(this)[0].text;
-        switch (clicked) {
-            case "Beginner":
-                generateFromFlags("jhmhMROm7DZ$cHRBTA");
-                break;
-            case "Swiss":
-                generateFromFlags("jhhhDcM#$Za$LpTBT!");
-                break;
-            case "Finals":
-                generateFromFlags("hhAhC0j#x78gJqTBTR");
-                break;
-            case "Max":
-                generateFromFlags("iyhqh$j#g7@$ZqTBT!");
-                break;
-            case "Bracket":
-                generateFromFlags("hhhhD0j#$Z8$JpTBT!");
-                break;
+        //probably a better way to identify this
+        console.log($(this)[0].text);
+        if ($(this)[0].text === 'Routing Royale') {
+            $(".itemDrops").attr("disabled", false);
+            $(".sub-item").show();
         }
+
+        generateFromFlags($(this)[0].id);
     });
 
     $("#SettingsModel_ShuffleStartingItems").change(function () {
@@ -560,6 +567,9 @@
     });
 
     $("#SettingsModel_ManuallySelectDrops").change(function () {
+        manuallySelectDrops();
+    });
+    $("#SettingsModel_StandardizeDrops").change(function () {
         manuallySelectDrops();
     });
 
@@ -681,7 +691,7 @@
     }
 
     function manuallySelectDrops() {
-        if (document.getElementById("SettingsModel_ManuallySelectDrops").checked) {
+        if (document.getElementById("SettingsModel_ManuallySelectDrops").checked || document.getElementById("SettingsModel_StandardizeDrops").checked) {
             $(".itemDrops").attr("disabled", false);
             $(".sub-item").show();
         } else {

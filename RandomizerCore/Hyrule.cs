@@ -6,6 +6,7 @@ using RandomizerCore.Constants;
 using RandomizerCore.Constants.Enums;
 using RandomizerCore.Constants.Places;
 using RandomizerCore.Constants.Towns;
+using RandomizerCore.ItemSprites;
 using RandomizerCore.Sprites;
 using RandomizerCore.Text;
 
@@ -561,10 +562,61 @@ namespace Z2Randomizer
             ProcessOverworld();
             DumpText();
 
+            if (Props.ShuffleItemSprites)
+                RandomizeItemSprites();
+
+            if (Props.FunPercentSprites)
+                FunPercentSprites();
+
             UpdateRom();
         }
 
+        public void RandomizeItemSprites()
+        {
+            var sprites = ItemSprites.Sprites();
 
+            //debug code
+            //var spoiler = new Dictionary<string, string>();
+
+            var usedSprites = new List<int>();
+
+            foreach (var sprite in sprites)
+            {
+                var newSpriteInt = R.Next(sprites.Count);
+
+                while (usedSprites.Contains(newSpriteInt))
+                {
+                    newSpriteInt = R.Next(sprites.Count);
+                }
+
+                var newSprite = sprites[newSpriteInt];
+
+                if (newSprite.Name == "OneUp" && _newSprite != null)
+                    newSprite.Sprite = _newSprite.OneUp;
+                    
+                foreach (var startingOffset in sprite.StartingAddresses)
+                    UpdateSprite(startingOffset, newSprite.Sprite);
+
+                //spoiler.Add(sprite.Name,newSprite.Name);
+
+                usedSprites.Add(newSpriteInt);
+            }
+        }
+
+        public void FunPercentSprites()
+        {
+            foreach (var startingOffset in ItemSprites.Sprites(true)
+                .SelectMany(sprite => sprite.StartingAddresses))
+                UpdateSprite(startingOffset, ItemSprites.BlankedSprite);
+        }
+
+        public void UpdateSprite(int startingOffset, int[] newSprite)
+        {
+            for (var i = 0; i < newSprite.Length; i++)
+            {
+                RomData.Put(startingOffset + i, (byte)newSprite[i]);
+            }
+        }
 
         /*
             Text Notes:
@@ -3711,6 +3763,8 @@ namespace Z2Randomizer
             }
         }
 
+        private ISprite _newSprite;
+
         private void UpdateSprites()
         {
             ISprite spriteObj = null;
@@ -3759,6 +3813,8 @@ namespace Z2Randomizer
 
             if (spriteObj == null)
                 return;
+
+            _newSprite = spriteObj;
 
             int[] sprite = spriteObj.Sprite;
             int[] s1Up = spriteObj.OneUp;
@@ -3815,8 +3871,6 @@ namespace Z2Randomizer
                     RomData.Put(0x34a90 + i, (byte)s1Up[i]);
                     RomData.Put(0x36a90 + i, (byte)s1Up[i]);
                     RomData.Put(0x38a90 + i, (byte)s1Up[i]);
-
-
                 }
 
                 for (int i = 0; i < sOw.Count(); i++)

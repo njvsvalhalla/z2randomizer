@@ -275,7 +275,6 @@
         );
 
         flagStr += flag(BitArray([getFlagId(65), getFlagId(66)]));
-
         $("#flags").val(flagStr);
     }
 
@@ -462,7 +461,7 @@
                 setValue(66, v[1]);
             }
         }
-
+      
         updateEverything();
         dontGenerate = false;
         generateFlags();

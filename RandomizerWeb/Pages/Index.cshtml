@@ -5,9 +5,15 @@
     ViewData["Title"] = "Zelda II Randomizer";
 }
 
-<h1 class="z2r-logo grid-full-width">
-    <img width="375" height="182" src="~/img/z2rlogo.png" alt="Zelda II the Adventure of Link Randomizer"/>
-</h1>
+    <div class="hero grid-full-width">
+        <h1 class="z2r-logo">
+            <img width="375" height="182" src="~/img/blank.png" alt="Zelda II the Adventure of Link Randomizer" />
+        </h1>
+        <div class="alter-contain">
+            <div class="fire-image"></div>
+            <div class="alter-image"></div>
+        </div>
+    </div>
 
 @if (Model.Environment == "DEV") {
     <div class="card grid-full-width">
@@ -20,41 +26,37 @@
 
 <form enctype="multipart/form-data" method="post">
     <div class="card grid-full-width basics">
-        <div class="card-header">
-            The Basics
-        </div>
         <div class="card-body">
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    Load Preset
-                </button>
-                <div class="dropdown-menu">
-                    @foreach (var item in Enum.GetValues(typeof(Enums.RandomizerPresets)))
-                    {
-                        <a class="dropdown-item preset-item">@item.ToString()</a>
-                    }
-                </div>
-            </div>
-
             <div class="form-group">
                 <label asp-for="RomFile">Input file</label>
                 <input type="file" class="form-control-file" asp-for="RomFile" accept=".nes">
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label asp-for="SettingsModel.Seed" id="generateBtn"><a>Seed (click this to generate a new one)</a></label>
-                    <input type="number" asp-for="SettingsModel.Seed" max="2147483647" min="1" class="form-control" id="seed">
-                </div>
-                <div class="col-md-4">
-                    <label for="flags" id="flagsModal">Flags (You can type in here to update)</label>
-                    <input type="input" class="form-control" id="flags">
+            <div>
+                <label>Seed</label>
+                <input type="number" asp-for="SettingsModel.Seed" max="2147483647" min="1" class="form-control" id="seed">
+                <input type="button" id="generateBtn" class="btn btn-secondary btn-sm" value="New Seed" />
+            </div>
+            <div>
+                <label for="flags" id="flagsModal">Flags</label>
+                <input type="input" class="form-control" id="flags">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                        Presets
+                    </button>
+                    <div class="dropdown-menu">
+                        @foreach (var item in Enum.GetValues(typeof(Enums.RandomizerPresets)))
+                        {
+                            <a class="dropdown-item preset-item">@item.ToString()</a>
+                        }
+                    </div>
                 </div>
             </div>
+            <input asp-page-handler="Upload" class="btn btn-primary" type="submit" value="Upload" disabled>
         </div>
     </div>
 
     <div class="card starting-items">
-        <div class="card-header">
+        <div class="card-header header-decoration">
             Starting Items
         </div>
         <div class="card-body text-left">
@@ -94,7 +96,7 @@
     </div>
 
     <div class="card starting-spells">
-        <div class="card-header">
+        <div class="card-header header-decoration">
             Starting Spells
         </div>
         <div class="card-body text-left">
@@ -134,10 +136,16 @@
     </div>
 
     <div class="card starting-stats">
-        <div class="card-header">
+        <div class="card-header header-decoration">
             Starting Stats
         </div>
         <div class="card-body text-left">
+            @Html.CheckBoxFor(m => m.SettingsModel.CommunityHints, new { @class = "flag59 usedForFlags", @data_toggle = "tooltip", @title = "When selected, will replace some text with hints submitted by the community" })
+            @Html.LabelFor(m => m.SettingsModel.CommunityHints, "Community Hints")
+            <br />
+            @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNumberOfLives, new { @class = "flag22 usedForFlags", @data_toggle = "tooltip", @title = "Start with anywhere from 2-5 lives" })
+            @Html.LabelFor(m => m.SettingsModel.RandomizeNumberOfLives, "Random Number Of Lives")
+            <br/>
             @Html.LabelFor(m => m.SettingsModel.StartingHeartContainers, "Starting Heart Containers")
             <select class="custom-select usedForFlags" asp-for="SettingsModel.StartingHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
             <br />
@@ -150,11 +158,6 @@
             @Html.LabelFor(m => m.SettingsModel.HintType, "Hint Type")
             <select class="custom-select usedForFlags" asp-for="SettingsModel.HintType" asp-items="Html.GetEnumSelectList<Enums.HintType>()" data-toggle="tooltip" title="Select what types of helpful hints are available"></select>
             <br />
-            @Html.CheckBoxFor(m => m.SettingsModel.CommunityHints, new { @class = "flag59 usedForFlags", @data_toggle = "tooltip", @title = "When selected, will replace some text with hints submitted by the community" })
-            @Html.LabelFor(m => m.SettingsModel.CommunityHints, "Community Hints")
-            <br />
-            @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNumberOfLives, new { @class = "flag22 usedForFlags", @data_toggle = "tooltip", @title = "Start with anywhere from 2-5 lives" })
-            @Html.LabelFor(m => m.SettingsModel.RandomizeNumberOfLives, "Random Number Of Lives")
         </div>
     </div>
 
@@ -231,7 +234,7 @@
         </div>
     </div>
     <div class="card spells">
-        <div class="card-header">
+        <div class="card-header header-decoration">
             Spells
         </div>
         <div class="card-body">
@@ -260,7 +263,7 @@
     </div>
 
     <div class="card enemies">
-        <div class="card-header">
+        <div class="card-header header-decoration">
             Enemies
         </div>
         <div class="card-body">
@@ -361,6 +364,14 @@
             @Html.CheckBoxFor(m => m.SettingsModel.PermanentBeamSword, new { @class = "flag34 usedForFlags" })
             @Html.LabelFor(m => m.SettingsModel.PermanentBeamSword, "Permanent Beam Sword")
             <br />
+        </div>
+    </div>
+
+    <div class="card player-sprite">
+        <div class="card-header header-decoration">
+            Player Sprite
+        </div>
+        <div class="card-body">
             @Html.LabelFor(m => m.SettingsModel.CharacterSprite, "Character Sprite")
             <select class="custom-select" asp-for="SettingsModel.CharacterSprite" asp-items="Html.GetEnumSelectList<Enums.CharacterSprite>()"></select>
             <br />
@@ -425,12 +436,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="card grid-full-width">
-        <div class="card-body">
-            <input asp-page-handler="Upload" class="btn btn-primary" type="submit" value="Upload" disabled>
         </div>
     </div>
 </form>

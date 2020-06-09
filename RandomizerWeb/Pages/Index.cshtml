@@ -1,5 +1,6 @@
 ﻿@page
 @using RandomizerApp
+@using RandomizerApp.Helpers
 @model IndexModel
 @{
     ViewData["Title"] = "Zelda II Randomizer";
@@ -46,7 +47,7 @@
                     <div class="dropdown-menu">
                         @foreach (var item in Enum.GetValues(typeof(Enums.RandomizerPresets)))
                         {
-                            <a class="dropdown-item preset-item">@item.ToString()</a>
+                            <a class="dropdown-item preset-item" id="@(((Enums.RandomizerPresets)Enum.Parse(typeof(Enums.RandomizerPresets),item.ToString())).GetStringValue())">@item.ToString().Replace(("_"), " ").Replace("TWNTYTWNTY", "2020")</a>
                         }
                     </div>
                 </div>

@@ -12,12 +12,18 @@ namespace RandomizerApp
             Beginner,
             [StringValue("jhhhDcM#$Za$LpTBT!")]
             Swiss,
+            [StringValue("jhhhD0L#$Za$LpTBT!")]
+            TWNTYTWNTY_Swiss,
             [StringValue("hhAhC0j#x78gJqTBTR")]
             Finals,
             [StringValue("iyhqh$j#g7@$ZqTBT!")]
             Max,
             [StringValue("hhhhD0j#$Z8$JpTBT!")]
-            Bracket
+            Bracket,
+            [StringValue("hhhhD0j#$Z8$Jp5HgR")]
+            TWNTYTWNTY_Bracket,
+            [StringValue("hhhhD0C#$7z$Jp1$$2")]
+            Routing_Royale
         }
 
         public enum EnemySize

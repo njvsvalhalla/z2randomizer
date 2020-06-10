@@ -293,17 +293,17 @@ namespace Z2Randomizer
                 if (!_hy.Props.ShuffleStartSpot)
                     Palaces.Remove(_start);
 
-                if (_hy.Props.AllowTerrainChanges)
+                if (_hy.Props.ShuffleAll || _hy.Props.AllowTerrainChanges)
                 {
                     var c = new Dictionary<Location, Location>();
                     var shuffleThese = new List<Location>();
 
-                    if (_hy.Props.ShuffleStartSpot)
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShuffleStartSpot)
                         shuffleThese.Add(_start);
                     else
                         _start.CanShuffle = false;
 
-                    if (_hy.Props.ShuffleTowns)
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShuffleTowns)
                     {
                         _cityConn.ToList().ForEach(x => c.Add(x.Key, x.Value));
                         shuffleThese.AddRange(Towns);
@@ -316,7 +316,7 @@ namespace Z2Randomizer
                         }
                     }
 
-                    if (_hy.Props.ShufflePalaces)
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShufflePalaces)
                         shuffleThese.AddRange(Palaces);
                     else
                     {
@@ -326,7 +326,7 @@ namespace Z2Randomizer
                         }
                     }
 
-                    if (_hy.Props.ShuffleEverythingElse)
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShuffleEverythingElse)
                     {
                         shuffleThese.AddRange(Caves);
                         shuffleThese.AddRange(Grasses);
@@ -375,7 +375,7 @@ namespace Z2Randomizer
                             l.CanShuffle = false;
                         }
                     }
-                    if (_hy.Props.ShuffleEverythingElse)
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShuffleEverythingElse)
                     {
                         ChooseConn("parapa", c, true);
                         ChooseConn("lifesouth", c, true);

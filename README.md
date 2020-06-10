@@ -2,9 +2,10 @@
 # Zelda 2 Randomizer - Console and Web App
 
 [Use it!](https://zeldaiirandomizer.com)
+[Dev/Staging area](https://dev.zeldaiirandomizer.com)
 
 Dev
-[![Build status](https://dev.azure.com/z2randomizer/MyProject/_apis/build/status/z2randomizer%20-%201%20-%20CI)](https://dev.azure.com/z2randomizer/MyProject/_build/latest?definitionId=2)
+[![Build status](https://dev.azure.com/z2randomizer/MyProject/_apis/build/status/z2rdev%20-%20CI)](https://dev.azure.com/z2randomizer/MyProject/_build/latest?definitionId=4)
 
 Prod
 [![Build status](https://dev.azure.com/z2randomizer/MyProject/_apis/build/status/z2randomizer%20-%202%20-%20CI)](https://dev.azure.com/z2randomizer/MyProject/_build/latest?definitionId=3)
@@ -19,9 +20,7 @@ Other than adding a web interface, I cleaned up the code quite a bit - added int
 
 I think I made good progress, and I'm happy with it now, I would still like to do more stuff in Hyrule.cs because I have a thing about 1000+ lines in files.
 
-## Basic asp core app/jqeury/bootsrap - for real?
-
-I'm honestly more of a back end dev. ~~I have minimal experience with react and angular and I think it's a bit overkill to write it in that.~~ I think down the line I will try to  re-do the web site, probably in react because I think I can do a lot better.
+I added back the ability to generate a non-randomized map to the code.
 
 ## Notes
 

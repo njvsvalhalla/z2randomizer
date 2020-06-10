@@ -146,6 +146,15 @@ namespace RandomizerApp
         public TunicColor ShieldTunicColor { get; set; } = TunicColor.Orange;
         public BeamSprite BeamSprite { get; set; } = BeamSprite.Default;
 
+        //clasicc rando options
+        public bool IsClassicMode { get; set; }
+        public bool ShuffleAll { get; set; }
+        public bool ShuffleStartSpot { get; set; }
+        public bool ShuffleTowns { get; set; }
+        public bool ShufflePalaces { get; set; }
+        public bool ShuffleEverythingElse { get; set; }
+        public bool AllowTerrainChanges { get; set; }
+
         public string ToJson() => JsonConvert.SerializeObject(this);
         public static int GenerateSeed() => (new Random()).Next(1000000000);
 
@@ -247,7 +256,13 @@ namespace RandomizerApp
                 FreeMagicEffectiveness = (MagicEffectiveness == MagicEffectiveness.Free),
                 TunicColor = TunicColor.GetStringValue(),
                 ShuffleItemSprites = ShuffleItemSprites,
-                FunPercentSprites = FunPercentSprites
+                FunPercentSprites = FunPercentSprites,
+                IsClassicMode =  true,
+                ShuffleAll = true,
+                ShuffleEverythingElse = true,
+                ShuffleTowns = true,
+                ShufflePalaces = true,
+                ShuffleStartSpot = true
             };
             ItemPoolPopulate(LargeEnemyPool, EnemySize.Large, ref properties);
             ItemPoolPopulate(SmallEnemyPool, EnemySize.Small, ref properties);

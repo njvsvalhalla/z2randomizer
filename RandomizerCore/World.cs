@@ -45,6 +45,9 @@ namespace Z2Randomizer
         internal List<Location> Lavas { get; set; }
         internal List<Location> Roads { get; set; }
 
+        protected SortedDictionary<Tuple<int, int>, string> Section;
+
+
         protected World(Hyrule parent)
         {
             _hy = parent;
@@ -92,6 +95,14 @@ namespace Z2Randomizer
             l2.XPos = tempX;
             l2.YPos = tempY;
             l2.PassThrough = tempPass;
+        }
+        protected void UpdateLocations()
+        {
+            _locsByCoords = new SortedDictionary<Tuple<int, int>, Location>();
+            foreach (var l in AllLocations)
+            {
+                _locsByCoords.Add(l.Coords, l);
+            }
         }
 
         public void ShuffleEnemies(int addr, bool isOver)
@@ -233,6 +244,41 @@ namespace Z2Randomizer
                 high &= 0x0FFF;
                 ShuffleEnemies(high + low + _enemyAddr, true);
             }
+        }
+
+        protected void ShuffleLocations(List<Location> locs)
+        {
+            for (var i = 0; i < locs.Count; i++)
+            {
+
+                var s = _hy.R.Next(i, locs.Count);
+                var sl = locs[s];
+                if (sl.CanShuffle && locs[i].CanShuffle)
+                {
+                    Swap(locs[i], locs[s]);
+                }
+            }
+        }
+
+        protected void ChooseConn(string section, Dictionary<Location, Location> co, bool changeType)
+        {
+            if (co.Count <= 0) return;
+
+            var start = _hy.R.Next(_hy.AreasByLocation[section].Count);
+            var s = _hy.AreasByLocation[section][start];
+            var conn = _hy.R.Next(co.Count);
+            var c = co.Keys.ElementAt(conn);
+            var count = 0;
+            while ((!c.CanShuffle || !s.CanShuffle || (!changeType && (c.TerrainType != s.TerrainType))) && count < co.Count)
+            {
+                start = _hy.R.Next(_hy.AreasByLocation[section].Count);
+                s = _hy.AreasByLocation[section][start];
+                conn = _hy.R.Next(co.Count);
+                c = co.Keys.ElementAt(conn);
+                count++;
+            }
+            Swap(s, c);
+            c.CanShuffle = false;
         }
 
         protected void PlaceLocations()

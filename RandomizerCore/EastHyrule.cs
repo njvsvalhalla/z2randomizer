@@ -114,7 +114,7 @@ namespace Z2Randomizer
             }
             _palace4 = GetLocationByMap(0x0F, 0x11) ?? GetLocationByMem(0x8657);
 
-            _hpCallSpot = new Location {XPos = 0, YPos = 0};
+            _hpCallSpot = new Location { XPos = 0, YPos = 0 };
 
             _enemyAddr = 0x88B0;
             _enemies = new List<int> { 03, 04, 05, 0x11, 0x12, 0x14, 0x16, 0x18, 0x19, 0x1A, 0x1B, 0x1C };
@@ -135,76 +135,313 @@ namespace Z2Randomizer
 
             _mapRows = 75;
             _mapCols = 64;
+
+            Section = new SortedDictionary<Tuple<int, int>, string>
+                {
+                    {Tuple.Create(0x3A, 0x0A), "mid2" },
+                    {Tuple.Create(0x5B, 0x36), "south" },
+                    {Tuple.Create(0x4C, 0x15), "south" },
+                    {Tuple.Create(0x51, 0x11), "south" },
+                    {Tuple.Create(0x54, 0x13), "south" },
+                    {Tuple.Create(0x60, 0x18), "south" },
+                    {Tuple.Create(0x5D, 0x23), "south" },
+                    {Tuple.Create(0x64, 0x25), "south" },
+                    {Tuple.Create(0x24, 0x09), "north2" },
+                    {Tuple.Create(0x26, 0x0A), "north2" },
+                    {Tuple.Create(0x38, 0x3F), "boots1" },
+                    {Tuple.Create(0x34, 0x18), "mid2" },
+                    {Tuple.Create(0x30, 0x1B), "north2" },
+                    {Tuple.Create(0x47, 0x19), "mid2" },
+                    {Tuple.Create(0x4E, 0x1F), "south" },
+                    {Tuple.Create(0x4E, 0x31), "south" },
+                    {Tuple.Create(0x4E, 0x39), "kasuto" },
+                    {Tuple.Create(0x4B, 0x02), "vod" },
+                    {Tuple.Create(0x4B, 0x04), "gp" },
+                    {Tuple.Create(0x4D, 0x06), "vod" },
+                    {Tuple.Create(0x4D, 0x0A), "south" },
+                    {Tuple.Create(0x51, 0x1A), "south" },
+                    {Tuple.Create(0x40, 0x35), "hammer2" },
+                    {Tuple.Create(0x38, 0x22), "mid2" },
+                    {Tuple.Create(0x2C, 0x30), "north2" },
+                    {Tuple.Create(0x63, 0x39), "south" },
+                    {Tuple.Create(0x44, 0x0D), "mid2" },
+                    {Tuple.Create(0x5B, 0x04), "south" },
+                    {Tuple.Create(0x63, 0x1B), "south" },
+                    {Tuple.Create(0x53, 0x03), "vod" },
+                    {Tuple.Create(0x56, 0x08), "south" },
+                    {Tuple.Create(0x63, 0x08), "south" },
+                    {Tuple.Create(0x28, 0x34), "north2" },
+                    {Tuple.Create(0x34, 0x07), "mid2" },
+                    {Tuple.Create(0x3C, 0x17), "mid2" },
+                    {Tuple.Create(0x21, 0x03), "north2" },
+                    {Tuple.Create(0x51, 0x3D), "kasuto" },
+                    {Tuple.Create(0x63, 0x22), "south" },
+                    {Tuple.Create(0x3C, 0x3E), "boots" },
+                    {Tuple.Create(0x66, 0x2D), "south" },
+                    {Tuple.Create(0x49, 0x04), "gp" }
+                };
         }
 
         public bool Terraform()
         {
             _bcount = 900;
-            while (_bcount > 792)
-            {
-                _map = new Terrain[_mapRows, _mapCols];
 
+            if (!_hy.Props.IsClassicMode)
+            {
+                while (_bcount > 792)
+                {
+                    _map = new Terrain[_mapRows, _mapCols];
+
+                    for (var i = 0; i < _mapRows; i++)
+                    {
+                        for (var j = 0; j < _mapCols; j++)
+                        {
+                            _map[i, j] = Terrain.None;
+                        }
+                    }
+                    DrawRoad();
+                    DaruniaPath();
+                    DrawMountains();
+                    DrawRiver();
+                    DrawVod();
+                    DrawOcean(false);
+                    DrawOcean(true);
+                    if (_hy._hiddenKasuto)
+                    {
+                        DrawHiddenKasuto();
+                    }
+                    PlaceLocations();
+                    if (_hy._hiddenPalace)
+                    {
+                        DrawHiddenPalace();
+                    }
+
+                    PlaceRandomTerrain(10);
+                    if (!GrowTerrain())
+                    {
+                        return false;
+                    }
+                    DrawRaft(true);
+                    DrawRaft(false);
+                    WriteBytes(false, 0x9056, 792, _palace6.YPos - 30, _palace6.XPos);
+                    Console.WriteLine("East:" + _bcount);
+                }
+            }
+
+            
+
+            if (!_hy.Props.IsClassicMode)
+            {
+                if (_hy._hiddenPalace)
+                {
+                    UpdateHPspot();
+                }
+                if (_hy._hiddenKasuto)
+                {
+                    UpdateKasuto();
+                }
+                WriteBytes(true, 0x9056, 792, _palace6.YPos - 30, _palace6.XPos);
+
+                var loc3 = 0x7C00 + _bcount;
+                var high = (loc3 & 0xFF00) >> 8;
+                var low = loc3 & 0xFF;
+
+                _hy.RomData.Put(0x879F, (byte)low);
+                _hy.RomData.Put(0x87A0, (byte)high);
+                _hy.RomData.Put(0x87A1, (byte)low);
+                _hy.RomData.Put(0x87A2, (byte)high);
+
+                _v = new bool[_mapRows, _mapCols];
                 for (var i = 0; i < _mapRows; i++)
                 {
                     for (var j = 0; j < _mapCols; j++)
                     {
-                        _map[i, j] = Terrain.None;
+                        _v[i, j] = false;
                     }
                 }
-                DrawRoad();
-                DaruniaPath();
-                DrawMountains();
-                DrawRiver();
-                DrawVod();
-                DrawOcean(false);
-                DrawOcean(true);
-                if (_hy._hiddenKasuto)
-                {
-                    DrawHiddenKasuto();
-                }
-                PlaceLocations();
-                if (_hy._hiddenPalace)
-                {
-                    DrawHiddenPalace();
-                }
-
-                PlaceRandomTerrain(10);
-                if (!GrowTerrain())
-                {
-                    return false;
-                }
-                DrawRaft(true);
-                DrawRaft(false);
-                WriteBytes(false, 0x9056, 792, _palace6.YPos - 30, _palace6.XPos);
-                Console.WriteLine("East:" + _bcount);
             }
-            if (_hy._hiddenPalace)
+
+            if (_hy.Props.IsClassicMode)
             {
-                UpdateHPspot();
-            }
-            if (_hy._hiddenKasuto)
-            {
-                UpdateKasuto();
-            }
-            WriteBytes(true, 0x9056, 792, _palace6.YPos - 30, _palace6.XPos);
-
-
-            var loc3 = 0x7C00 + _bcount;
-            var high = (loc3 & 0xFF00) >> 8;
-            var low = loc3 & 0xFF;
-
-            _hy.RomData.Put(0x879F, (byte)low);
-            _hy.RomData.Put(0x87A0, (byte)high);
-            _hy.RomData.Put(0x87A1, (byte)low);
-            _hy.RomData.Put(0x87A2, (byte)high);
-
-            _v = new bool[_mapRows, _mapCols];
-            for (var i = 0; i < _mapRows; i++)
-            {
-                for (var j = 0; j < _mapCols; j++)
+                if (!_hy.Props.AllowTerrainChanges)
                 {
-                    _v[i, j] = false;
+
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShuffleTowns)
+                    {
+                        ShuffleLocations(Towns);
+                        //wasShuffled = true;
+                    }
+
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShufflePalaces)
+                    {
+                        ShuffleLocations(Palaces);
+                        //wasShuffled = true;
+                    }
+
+                    if (_hy.Props.ShuffleAll || _hy.Props.ShuffleEverythingElse)
+                    {
+                        ShuffleLocations(Caves);
+                        ShuffleLocations(Grasses);
+                        ShuffleLocations(Swamps);
+                        ShuffleLocations(Deserts);
+                        ShuffleLocations(Forests);
+                        ShuffleLocations(Graves);
+                        ShuffleLocations(Roads);
+                        ShuffleLocations(Bridges);
+                        //wasShuffled = true;
+                    }
+                    else
+                    {
+                        foreach (var l in Caves)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Grasses)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Swamps)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Deserts)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Forests)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Graves)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Roads)
+                        {
+                            l.CanShuffle = false;
+                        }
+
+                        foreach (var l in Bridges)
+                        {
+                            l.CanShuffle = false;
+                        }
+                    }
                 }
+                var c = new Dictionary<Location, Location>();
+                var shuffleThese = new List<Location>();
+
+                if (_hy.Props.AllowTerrainChanges)
+                {
+                    if (_hy.Props.ShuffleAll)
+                    {
+                        c = _connections;
+                        shuffleThese = AllLocations;
+                    }
+
+                    else
+                    {
+                        if (_hy.Props.ShuffleStartSpot)
+                            shuffleThese.Add(_start);
+                        else
+                            _start.CanShuffle = false;
+
+                        if (_hy.Props.ShuffleTowns)
+                            shuffleThese.AddRange(Towns);
+                        else
+                            foreach (var l in Towns)
+                            {
+                                l.CanShuffle = false;
+                            }
+
+                        if (_hy.Props.ShufflePalaces)
+                            shuffleThese.AddRange(Palaces);
+                        else
+                            foreach (var l in Palaces)
+                            {
+                                l.CanShuffle = false;
+                            }
+
+                        if (_hy.Props.ShuffleEverythingElse)
+                        {
+                            shuffleThese.AddRange(Caves);
+                            shuffleThese.AddRange(Grasses);
+                            shuffleThese.AddRange(Swamps);
+                            shuffleThese.AddRange(Deserts);
+                            shuffleThese.AddRange(Forests);
+                            shuffleThese.AddRange(Graves);
+                            shuffleThese.AddRange(Roads);
+                            shuffleThese.AddRange(Bridges);
+                        }
+                        else
+                        {
+                            foreach (var l in Caves)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Grasses)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Swamps)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Deserts)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Forests)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Graves)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Roads)
+                            {
+                                l.CanShuffle = false;
+                            }
+                            foreach (var l in Bridges)
+                            {
+                                l.CanShuffle = false;
+                            }
+                        }
+                    }
+                    if (_hy.Props.ShuffleEverythingElse)
+                    {
+                        ChooseConn("kasuto", c, true);
+                        ChooseConn("vod", c, true);
+                        ChooseConn("gp", c, true);
+                    }
+                    ShuffleLocations(shuffleThese);
+                }
+                foreach (var co in _connections.Keys)
+                {
+                    co.PassThrough = 0;
+                }
+                foreach (var co in Towns)
+                {
+                    co.PassThrough = 0;
+                }
+                foreach (var co in Caves)
+                {
+                    co.PassThrough = 0;
+                }
+                foreach (var co in Palaces)
+                {
+                    co.PassThrough = 0;
+                }
+                _start.PassThrough = 0;
+                var mazeIsland = GetLocationByMem(0x8657);
+                mazeIsland.PassThrough = 0;
+                UpdateLocations();
             }
 
             _newKasuto.ExternalWorld = 128;
@@ -222,6 +459,30 @@ namespace Z2Randomizer
             _hy.RomData.Put(0x1ccdb, (byte)(_newKasuto.YPos));
             _newKasuto.NeedHammer = true;
             _newKasuto2.NeedHammer = true;
+        }
+
+        public void UpdateAreas()
+        {
+            try
+            {
+                _hy.AreasByLocation.Add("north2", new List<Location>());
+                _hy.AreasByLocation.Add("mid2", new List<Location>());
+                _hy.AreasByLocation.Add("south", new List<Location>());
+                _hy.AreasByLocation.Add("vod", new List<Location>());
+                _hy.AreasByLocation.Add("kasuto", new List<Location>());
+                _hy.AreasByLocation.Add("gp", new List<Location>());
+                _hy.AreasByLocation.Add("boots", new List<Location>());
+                _hy.AreasByLocation.Add("boots1", new List<Location>());
+                _hy.AreasByLocation.Add("hammer2", new List<Location>());
+            }
+            catch
+            {
+
+            }
+            foreach (var l in AllLocations)
+            {
+                _hy.AreasByLocation[Section[l.Coords]].Add(GetLocationByCoords(l.Coords));
+            }
         }
 
         private void DrawHiddenKasuto()
@@ -352,6 +613,14 @@ namespace Z2Randomizer
             _map[rl.YPos - 30, rl.XPos] = Terrain.Road;
             _map[r2.YPos - 30, r2.XPos] = Terrain.Road;
             DrawLine(rl, r2, Terrain.Road);
+        }
+
+        public void TransferLocs()
+        {
+            foreach (var l in AllLocations.Where(l => !_hy.Section.ContainsKey(l)))
+            {
+                _hy.Section.Add(l, Section[l.Coords]);
+            }
         }
 
         private void DrawLine(Location to, Location from, Terrain t)
@@ -816,45 +1085,45 @@ namespace Z2Randomizer
                         placedSpider = true;
                         break;
                     case Terrain.Road:
-                    {
-                        if (_map[y2, x2 + 1] == Terrain.None && (((y2 > 0 && _map[y2 - 1, x2] == Terrain.Road) && (y2 < _mapRows - 1 && _map[y2 + 1, x2] == Terrain.Road)) || ((x2 > 0 && _map[y2, x2 - 0] == Terrain.Road) && (x2 < _mapCols - 1 && _map[y2, x2 + 1] == Terrain.Road))))
                         {
-                            if (roadEncounters == 0)
+                            if (_map[y2, x2 + 1] == Terrain.None && (((y2 > 0 && _map[y2 - 1, x2] == Terrain.Road) && (y2 < _mapRows - 1 && _map[y2 + 1, x2] == Terrain.Road)) || ((x2 > 0 && _map[y2, x2 - 0] == Terrain.Road) && (x2 < _mapCols - 1 && _map[y2, x2 + 1] == Terrain.Road))))
                             {
-                                var roadEnc = GetLocationByMem(0x8631);
-                                roadEnc.XPos = x2;
-                                roadEnc.YPos = y2 + 30;
-                                roadEnc.CanShuffle = false;
-                                roadEncounters++;
+                                if (roadEncounters == 0)
+                                {
+                                    var roadEnc = GetLocationByMem(0x8631);
+                                    roadEnc.XPos = x2;
+                                    roadEnc.YPos = y2 + 30;
+                                    roadEnc.CanShuffle = false;
+                                    roadEncounters++;
+                                }
+                                else if (roadEncounters == 1)
+                                {
+                                    var roadEnc = GetLocationByMem(0x8632);
+                                    roadEnc.XPos = x2;
+                                    roadEnc.YPos = y2 + 30;
+                                    roadEnc.CanShuffle = false;
+                                    roadEncounters++;
+                                }
+                                else if (roadEncounters == 2)
+                                {
+                                    var roadEnc = GetLocationByMem(0x8633);
+                                    roadEnc.XPos = x2;
+                                    roadEnc.YPos = y2 + 30;
+                                    roadEnc.CanShuffle = false;
+                                    roadEncounters++;
+                                }
+                                else if (roadEncounters == 3)
+                                {
+                                    var roadEnc = GetLocationByMem(0x8634);
+                                    roadEnc.XPos = x2;
+                                    roadEnc.YPos = y2 + 30;
+                                    roadEnc.CanShuffle = false;
+                                    roadEncounters++;
+                                }
                             }
-                            else if (roadEncounters == 1)
-                            {
-                                var roadEnc = GetLocationByMem(0x8632);
-                                roadEnc.XPos = x2;
-                                roadEnc.YPos = y2 + 30;
-                                roadEnc.CanShuffle = false;
-                                roadEncounters++;
-                            }
-                            else if (roadEncounters == 2)
-                            {
-                                var roadEnc = GetLocationByMem(0x8633);
-                                roadEnc.XPos = x2;
-                                roadEnc.YPos = y2 + 30;
-                                roadEnc.CanShuffle = false;
-                                roadEncounters++;
-                            }
-                            else if (roadEncounters == 3)
-                            {
-                                var roadEnc = GetLocationByMem(0x8634);
-                                roadEnc.XPos = x2;
-                                roadEnc.YPos = y2 + 30;
-                                roadEnc.CanShuffle = false;
-                                roadEncounters++;
-                            }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
 
@@ -903,52 +1172,52 @@ namespace Z2Randomizer
                         placedSpider = true;
                         break;
                     case Terrain.Road:
-                    {
-                        if (_map[y2, x2 + 1] == Terrain.None && (((y2 > 0 && _map[y2 - 1, x2] == Terrain.Road) && (y2 < _mapRows - 1 && _map[y2 + 1, x2] == Terrain.Road)) || ((x2 > 0 && _map[y2, x2 - 0] == Terrain.Road) && (x2 < _mapCols - 1 && _map[y2, x2 + 1] == Terrain.Road))))
                         {
-                            switch (roadEncounters)
+                            if (_map[y2, x2 + 1] == Terrain.None && (((y2 > 0 && _map[y2 - 1, x2] == Terrain.Road) && (y2 < _mapRows - 1 && _map[y2 + 1, x2] == Terrain.Road)) || ((x2 > 0 && _map[y2, x2 - 0] == Terrain.Road) && (x2 < _mapCols - 1 && _map[y2, x2 + 1] == Terrain.Road))))
                             {
-                                case 0:
+                                switch (roadEncounters)
                                 {
-                                    var roadEnc = GetLocationByMem(0x8631);
-                                    roadEnc.XPos = x2;
-                                    roadEnc.YPos = y2 + 30;
-                                    roadEnc.CanShuffle = false;
-                                    roadEncounters++;
-                                    break;
-                                }
-                                case 1:
-                                {
-                                    var roadEnc = GetLocationByMem(0x8632);
-                                    roadEnc.XPos = x2;
-                                    roadEnc.YPos = y2 + 30;
-                                    roadEnc.CanShuffle = false;
-                                    roadEncounters++;
-                                    break;
-                                }
-                                case 2:
-                                {
-                                    var roadEnc = GetLocationByMem(0x8633);
-                                    roadEnc.XPos = x2;
-                                    roadEnc.YPos = y2 + 30;
-                                    roadEnc.CanShuffle = false;
-                                    roadEncounters++;
-                                    break;
-                                }
-                                case 3:
-                                {
-                                    var roadEnc = GetLocationByMem(0x8634);
-                                    roadEnc.XPos = x2;
-                                    roadEnc.YPos = y2 + 30;
-                                    roadEnc.CanShuffle = false;
-                                    roadEncounters++;
-                                    break;
+                                    case 0:
+                                        {
+                                            var roadEnc = GetLocationByMem(0x8631);
+                                            roadEnc.XPos = x2;
+                                            roadEnc.YPos = y2 + 30;
+                                            roadEnc.CanShuffle = false;
+                                            roadEncounters++;
+                                            break;
+                                        }
+                                    case 1:
+                                        {
+                                            var roadEnc = GetLocationByMem(0x8632);
+                                            roadEnc.XPos = x2;
+                                            roadEnc.YPos = y2 + 30;
+                                            roadEnc.CanShuffle = false;
+                                            roadEncounters++;
+                                            break;
+                                        }
+                                    case 2:
+                                        {
+                                            var roadEnc = GetLocationByMem(0x8633);
+                                            roadEnc.XPos = x2;
+                                            roadEnc.YPos = y2 + 30;
+                                            roadEnc.CanShuffle = false;
+                                            roadEncounters++;
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            var roadEnc = GetLocationByMem(0x8634);
+                                            roadEnc.XPos = x2;
+                                            roadEnc.YPos = y2 + 30;
+                                            roadEnc.CanShuffle = false;
+                                            roadEncounters++;
+                                            break;
+                                        }
                                 }
                             }
-                        }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
 
@@ -1005,48 +1274,48 @@ namespace Z2Randomizer
             {
                 //start north
                 case 0:
-                {
-                    var startx = _hy.R.Next(_mapCols);
-                    lr = new Location
                     {
-                        XPos = startx,
-                        YPos = 30
-                    };
-                    break;
-                }
+                        var startx = _hy.R.Next(_mapCols);
+                        lr = new Location
+                        {
+                            XPos = startx,
+                            YPos = 30
+                        };
+                        break;
+                    }
                 //start east
                 case 1:
-                {
-                    var startx = _hy.R.Next(_mapRows);
-                    lr = new Location
                     {
-                        YPos = startx + 30,
-                        XPos = _mapCols - 1
-                    };
-                    break;
-                }
+                        var startx = _hy.R.Next(_mapRows);
+                        lr = new Location
+                        {
+                            YPos = startx + 30,
+                            XPos = _mapCols - 1
+                        };
+                        break;
+                    }
                 //start south
                 case 2:
-                {
-                    var startx = _hy.R.Next(_mapCols);
-                    lr = new Location
                     {
-                        XPos = startx,
-                        YPos = _mapRows - 1 + 30
-                    };
-                    break;
-                }
+                        var startx = _hy.R.Next(_mapCols);
+                        lr = new Location
+                        {
+                            XPos = startx,
+                            YPos = _mapRows - 1 + 30
+                        };
+                        break;
+                    }
                 //start west
                 default:
-                {
-                    var startx = _hy.R.Next(_mapRows);
-                    lr = new Location
                     {
-                        YPos = startx + 30,
-                        XPos = 0
-                    };
-                    break;
-                }
+                        var startx = _hy.R.Next(_mapRows);
+                        lr = new Location
+                        {
+                            YPos = startx + 30,
+                            XPos = 0
+                        };
+                        break;
+                    }
             }
 
             Location lr2;

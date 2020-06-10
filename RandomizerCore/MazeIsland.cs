@@ -62,198 +62,250 @@ namespace Z2Randomizer
         public void Terraform()
         {
             _bcount = 900;
-            while (_bcount > 801)
+            if (!_hy.Props.IsClassicMode)
             {
-                _map = new Terrain[_mapRows, _mapCols];
-                var visited = new bool[_mapRows, 21];
-                for (var i = 0; i < _mapRows; i += 2)
+                while (_bcount > 801)
                 {
-                    for (var j = 0; j < 21; j++)
+                    _map = new Terrain[_mapRows, _mapCols];
+                    var visited = new bool[_mapRows, 21];
+                    for (var i = 0; i < _mapRows; i += 2)
                     {
-                        _map[i, j] = Terrain.Mountain;
+                        for (var j = 0; j < 21; j++)
+                        {
+                            _map[i, j] = Terrain.Mountain;
+                        }
                     }
-                }
 
-                for (var i = 0; i < _mapRows; i++)
-                {
-                    for (var j = 21; j < _mapCols; j++)
-                    {
-                        _map[i, j] = Terrain.Water;
-                    }
-                }
-
-                for (var j = 0; j < 21; j += 2)
-                {
                     for (var i = 0; i < _mapRows; i++)
                     {
-                        _map[i, j] = Terrain.Mountain;
+                        for (var j = 21; j < _mapCols; j++)
+                        {
+                            _map[i, j] = Terrain.Water;
+                        }
+                    }
+
+                    for (var j = 0; j < 21; j += 2)
+                    {
+                        for (var i = 0; i < _mapRows; i++)
+                        {
+                            _map[i, j] = Terrain.Mountain;
+                        }
+                    }
+
+                    for (var i = 0; i < _mapRows; i++)
+                    {
+                        for (var j = 0; j < 21; j++)
+                        {
+                            if (_map[i, j] != Terrain.Mountain && _map[i, j] != Terrain.Water)
+                            {
+                                _map[i, j] = Terrain.Road;
+                                visited[i, j] = false;
+                            }
+                            else
+                            {
+                                visited[i, j] = true;
+                            }
+                        }
+                    }
+
+                    //choose starting position
+                    var starty = _hy.R.Next(_mapRows);
+                    if (starty == 0)
+                    {
+                        starty++;
+                    }
+                    else if (starty % 2 == 0)
+                    {
+                        starty--;
+                    }
+
+                    _map[starty, 0] = Terrain.Bridge;
+                    _start.XPos = 0;
+                    _start.YPos = starty + 30;
+                    _start.PassThrough = 0;
+
+                    //generate maze
+                    var currx = 1;
+                    var curry = starty;
+                    var s = new Stack<Tuple<int, int>>();
+
+                    while (MoreToVisit(visited))
+                    {
+                        var n = GetListOfNeighbors(currx, curry, visited);
+                        if (n.Count > 0)
+                        {
+                            var next = n[_hy.R.Next(n.Count)];
+                            s.Push(next);
+                            if (next.Item1 > currx)
+                            {
+                                _map[curry, currx + 1] = Terrain.Road;
+                            }
+                            else if (next.Item1 < currx)
+                            {
+                                _map[curry, currx - 1] = Terrain.Road;
+                            }
+                            else if (next.Item2 > curry)
+                            {
+                                _map[curry + 1, currx] = Terrain.Road;
+                            }
+                            else
+                            {
+                                _map[curry - 1, currx] = Terrain.Road;
+                            }
+
+                            currx = next.Item1;
+                            curry = next.Item2;
+                            visited[curry, currx] = true;
+                        }
+                        else if (s.Count > 0)
+                        {
+                            var n2 = s.Pop();
+                            currx = n2.Item1;
+                            curry = n2.Item2;
+                        }
+                    }
+
+                    //place palace 4
+
+
+                    var p4X = _hy.R.Next(15) + 3;
+                    var p4Y = _hy.R.Next(_mapRows - 6) + 3;
+
+                    _palace4.XPos = p4X;
+                    _palace4.YPos = p4Y + 30;
+                    _map[p4Y, p4X] = Terrain.Palace;
+                    _map[p4Y + 1, p4X] = Terrain.Road;
+                    _map[p4Y - 1, p4X] = Terrain.Road;
+                    _map[p4Y, p4X + 1] = Terrain.Road;
+                    _map[p4Y, p4X - 1] = Terrain.Road;
+
+                    //draw a river
+                    var riverstart = starty;
+                    while (riverstart == starty)
+                    {
+                        riverstart = _hy.R.Next(10) * 2;
+                    }
+
+                    var riverend = _hy.R.Next(10) * 2;
+
+                    var rs = new Location
+                    {
+                        XPos = 0,
+                        YPos = riverstart + 30
+                    };
+
+                    var re = new Location
+                    {
+                        XPos = 20,
+                        YPos = riverend + 30
+                    };
+
+                    DrawLine(rs, re, Terrain.WalkableWater);
+
+                    foreach (var l in AllLocations)
+                    {
+                        if (l.TerrainType != Terrain.Road) continue;
+                        int x;
+                        int y;
+                        if (l != _magic && l != _kid)
+                        {
+                            do
+                            {
+                                x = _hy.R.Next(19) + 2;
+                                y = _hy.R.Next(_mapRows - 4) + 2;
+                            } while (_map[y, x] != Terrain.Road ||
+                                     !((_map[y, x + 1] == Terrain.Mountain && _map[y, x - 1] == Terrain.Mountain) ||
+                                       (_map[y + 1, x] == Terrain.Mountain && _map[y - 1, x] == Terrain.Mountain)) ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 30, x + 1)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 30, x - 1)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 31, x)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 29, x)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 30, x)) != null);
+                        }
+                        else
+                        {
+                            do
+                            {
+                                x = _hy.R.Next(19) + 2;
+                                y = _hy.R.Next(_mapRows - 4) + 2;
+                            } while (_map[y, x] != Terrain.Road ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 30, x + 1)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 30, x - 1)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 31, x)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 29, x)) != null ||
+                                     GetLocationByCoords(new Tuple<int, int>(y + 30, x)) != null);
+                        }
+
+                        l.XPos = x;
+                        l.YPos = y + 30;
+                    }
+
+                    //check bytes and adjust
+                    WriteBytes(false, 0xA65C, 801, 0, 0);
+                }
+
+                WriteBytes(true, 0xA65C, 801, 0, 0);
+
+                var loc3 = 0x7C00 + _bcount;
+                var high = (loc3 & 0xFF00) >> 8;
+                var low = loc3 & 0xFF;
+
+
+                _hy.RomData.Put(0x87A5, (Byte) low);
+                _hy.RomData.Put(0x87A6, (Byte) high);
+
+                for (var i = 0xA10C; i < 0xA149; i++)
+                {
+                    if (!_terrains.Keys.Contains(i))
+                    {
+                        _hy.RomData.Put(i, 0x00);
                     }
                 }
 
+                _v = new bool[_mapRows, _mapCols];
                 for (var i = 0; i < _mapRows; i++)
                 {
-                    for (var j = 0; j < 21; j++)
+                    for (var j = 0; j < _mapCols; j++)
                     {
-                        if (_map[i, j] != Terrain.Mountain && _map[i, j] != Terrain.Water)
-                        {
-                            _map[i, j] = Terrain.Road;
-                            visited[i, j] = false;
-                        }
-                        else
-                        {
-                            visited[i, j] = true;
-                        }
+                        _v[i, j] = false;
                     }
                 }
-                //choose starting position
-                var starty = _hy.R.Next(_mapRows);
-                if (starty == 0)
+            }
+            else
+            {
+                if (_hy.Props.ShuffleAll)
                 {
-                    starty++;
-                }
-                else if (starty % 2 == 0)
-                {
-                    starty--;
-                }
-
-                _map[starty, 0] = Terrain.Bridge;
-                _start.XPos = 0;
-                _start.YPos = starty + 30;
-                _start.PassThrough = 0;
-
-                //generate maze
-                var currx = 1;
-                var curry = starty;
-                var s = new Stack<Tuple<int, int>>();
-
-                while (MoreToVisit(visited))
-                {
-                    var n = GetListOfNeighbors(currx, curry, visited);
-                    if (n.Count > 0)
+                    if (_hy.Props.AllowTerrainChanges)
                     {
-                        var next = n[_hy.R.Next(n.Count)];
-                        s.Push(next);
-                        if (next.Item1 > currx)
+                        ShuffleLocations(AllLocations);
+                        while (GetLocationByMem(0xA134).YPos == 0x43 && GetLocationByMem(0xA134).XPos == 0x28)
                         {
-                            _map[curry, currx + 1] = Terrain.Road;
+                            ShuffleLocations(AllLocations);
                         }
-                        else if (next.Item1 < currx)
-                        {
-                            _map[curry, currx - 1] = Terrain.Road;
-                        }
-                        else if (next.Item2 > curry)
-                        {
-                            _map[curry + 1, currx] = Terrain.Road;
-                        }
-                        else
-                        {
-                            _map[curry - 1, currx] = Terrain.Road;
-                        }
-                        currx = next.Item1;
-                        curry = next.Item2;
-                        visited[curry, currx] = true;
-                    }
-                    else if (s.Count > 0)
-                    {
-                        var n2 = s.Pop();
-                        currx = n2.Item1;
-                        curry = n2.Item2;
-                    }
-                }
-
-                //place palace 4
-
-
-                var p4X = _hy.R.Next(15) + 3;
-                var p4Y = _hy.R.Next(_mapRows - 6) + 3;
-
-                _palace4.XPos = p4X;
-                _palace4.YPos = p4Y + 30;
-                _map[p4Y, p4X] = Terrain.Palace;
-                _map[p4Y + 1, p4X] = Terrain.Road;
-                _map[p4Y - 1, p4X] = Terrain.Road;
-                _map[p4Y, p4X + 1] = Terrain.Road;
-                _map[p4Y, p4X - 1] = Terrain.Road;
-
-                //draw a river
-                var riverstart = starty;
-                while (riverstart == starty)
-                {
-                    riverstart = _hy.R.Next(10) * 2;
-                }
-
-                var riverend = _hy.R.Next(10) * 2;
-
-                var rs = new Location
-                {
-                    XPos = 0,
-                    YPos = riverstart + 30
-                };
-
-                var re = new Location
-                {
-                    XPos = 20,
-                    YPos = riverend + 30
-                };
-
-                DrawLine(rs, re, Terrain.WalkableWater);
-
-                foreach (var l in AllLocations)
-                {
-                    if (l.TerrainType != Terrain.Road) continue;
-                    int x;
-                    int y;
-                    if (l != _magic && l != _kid)
-                    {
-                        do
-                        {
-                            x = _hy.R.Next(19) + 2;
-                            y = _hy.R.Next(_mapRows - 4) + 2;
-                        } while (_map[y, x] != Terrain.Road || !((_map[y, x + 1] == Terrain.Mountain && _map[y, x - 1] == Terrain.Mountain) || (_map[y + 1, x] == Terrain.Mountain && _map[y - 1, x] == Terrain.Mountain)) || GetLocationByCoords(new Tuple<int, int>(y + 30, x + 1)) != null || GetLocationByCoords(new Tuple<int, int>(y + 30, x - 1)) != null || GetLocationByCoords(new Tuple<int, int>(y + 31, x)) != null || GetLocationByCoords(new Tuple<int, int>(y + 29, x)) != null || GetLocationByCoords(new Tuple<int, int>(y + 30, x)) != null);
                     }
                     else
                     {
-                        do
-                        {
-                            x = _hy.R.Next(19) + 2;
-                            y = _hy.R.Next(_mapRows - 4) + 2;
-                        } while (_map[y, x] != Terrain.Road || GetLocationByCoords(new Tuple<int, int>(y + 30, x + 1)) != null || GetLocationByCoords(new Tuple<int, int>(y + 30, x - 1)) != null || GetLocationByCoords(new Tuple<int, int>(y + 31, x)) != null || GetLocationByCoords(new Tuple<int, int>(y + 29, x)) != null || GetLocationByCoords(new Tuple<int, int>(y + 30, x)) != null);
+                        ShuffleLocations(Roads);
                     }
-
-                    l.XPos = x;
-                    l.YPos = y + 30;
                 }
-
-                //check bytes and adjust
-                WriteBytes(false, 0xA65C, 801, 0, 0);
-            }
-
-            WriteBytes(true, 0xA65C, 801, 0, 0);
-
-            var loc3 = 0x7C00 + _bcount;
-            var high = (loc3 & 0xFF00) >> 8;
-            var low = loc3 & 0xFF;
-
-
-            _hy.RomData.Put(0x87A5, (Byte)low);
-            _hy.RomData.Put(0x87A6, (Byte)high);
-
-            for (var i = 0xA10C; i < 0xA149; i++)
-            {
-                if (!_terrains.Keys.Contains(i))
+                else if (_hy.Props.ShuffleEverythingElse)
                 {
-                    _hy.RomData.Put(i, 0x00);
+                    ShuffleLocations(Roads);
+                }
+                var palace = GetLocationByMem(0xA140);
+                foreach (Location l in AllLocations)
+                {
+                    if (l != _kid && l != _palace4 && l != _magic && l != _start)
+                    {
+                        l.PassThrough = 64;
+                    }
+                    else
+                    {
+                        l.PassThrough = 0;
+                    }
                 }
             }
 
-            _v = new bool[_mapRows, _mapCols];
-            for (var i = 0; i < _mapRows; i++)
-            {
-                for (var j = 0; j < _mapCols; j++)
-                {
-                    _v[i, j] = false;
-                }
-            }
         }
 
         private bool MoreToVisit(bool[,] v)

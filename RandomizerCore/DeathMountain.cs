@@ -150,136 +150,238 @@ namespace Z2Randomizer
             _overworldMaps = new List<int>();
             _mapRows = 45;
             _mapCols = 64;
-    }
+            Section = new SortedDictionary<Tuple<int, int>, string> {
+                { Tuple.Create(0x2A, 0x00), "C" },
+                { Tuple.Create(0x29, 0x04), "A" },
+                { Tuple.Create(0x28, 0x09), "A" },
+                { Tuple.Create(0x2A, 0x0B), "D" },
+                { Tuple.Create(0x2B, 0x10), "D" },
+                { Tuple.Create(0x27, 0x0E), "B" },
+                { Tuple.Create(0x2D, 0x03), "C" },
+                { Tuple.Create(0x2D, 0x07), "E" },
+                { Tuple.Create(0x30, 0x03), "H" },
+                { Tuple.Create(0x2F, 0x05), "E" },
+                { Tuple.Create(0x2F, 0x0E), "F" },
+                { Tuple.Create(0x30, 0x10), "G" },
+                { Tuple.Create(0x33, 0x04), "H" },
+                { Tuple.Create(0x36, 0x05), "I" },
+                { Tuple.Create(0x30, 0x14), "G" },
+                { Tuple.Create(0x32, 0x14), "K" },
+                { Tuple.Create(0x34, 0x16), "K" },
+                { Tuple.Create(0x36, 0x14), "N" },
+                { Tuple.Create(0x3B, 0x03), "L" },
+                { Tuple.Create(0x39, 0x07), "I" },
+                { Tuple.Create(0x3A, 0x0F), "M" },
+                { Tuple.Create(0x39, 0x12), "N" },
+                { Tuple.Create(0x3C, 0x0D), "M" },
+                { Tuple.Create(0x3C, 0x11), "O" },
+                { Tuple.Create(0x41, 0x10), "P" },
+                { Tuple.Create(0x3F, 0x12), "O" },
+                { Tuple.Create(0x3F, 0x16), "P" },
+                { Tuple.Create(0x3C, 0x18), "Q" },
+                { Tuple.Create(0x40, 0x0A), "P" },
+                { Tuple.Create(0x36, 0x0B), "I" },
+                { Tuple.Create(0x36, 0x0E), "J" },
+                { Tuple.Create(0x2F, 0x09), "E" },
+                { Tuple.Create(0x30, 0x0B), "F" },
+                { Tuple.Create(0x34, 0x08), "I" },
+                { Tuple.Create(0x33, 0x0A), "F" },
+                { Tuple.Create(0x28, 0x12), "B" },
+                { Tuple.Create(0x2C, 0x12), "G" },
+                { Tuple.Create(0x25, 0x07), "A" },
+                { Tuple.Create(0x25, 0x17), "Q" },
+                { Tuple.Create(0x40, 0x08), "hammer3" }
+            };
+        }
 
         public bool Terraform()
         {
             _bcount = 900;
-            while (_bcount > 801)
+            if (!_hy.Props.IsClassicMode)
             {
-                _map = new Terrain[_mapRows, _mapCols];
 
-                for (var i = 0; i < _mapRows; i++)
+                while (_bcount > 801)
                 {
-                    for (var j = 0; j < 29; j++)
-                    {
-                        _map[i, j] = Terrain.None;
-                    }
-                    for (var j = 29; j < _mapCols; j++)
-                    {
-                        _map[i, j] = Terrain.WalkableWater;
-                    }
-                }
+                    _map = new Terrain[_mapRows, _mapCols];
 
-                int x;
-                int y;
-                foreach (var l in AllLocations.Where(l => l.TerrainType != Terrain.Bridge && l != _magicCave))
-                {
+                    for (var i = 0; i < _mapRows; i++)
+                    {
+                        for (var j = 0; j < 29; j++)
+                        {
+                            _map[i, j] = Terrain.None;
+                        }
+
+                        for (var j = 29; j < _mapCols; j++)
+                        {
+                            _map[i, j] = Terrain.WalkableWater;
+                        }
+                    }
+
+                    int x;
+                    int y;
+                    foreach (var l in AllLocations.Where(l => l.TerrainType != Terrain.Bridge && l != _magicCave))
+                    {
+                        do
+                        {
+                            x = _hy.R.Next(_mapCols - 2) + 1;
+                            y = _hy.R.Next(_mapRows - 2) + 1;
+                        } while (_map[y, x] != Terrain.None || _map[y - 1, x] != Terrain.None ||
+                                 _map[y + 1, x] != Terrain.None || _map[y + 1, x + 1] != Terrain.None ||
+                                 _map[y, x + 1] != Terrain.None || _map[y - 1, x + 1] != Terrain.None ||
+                                 _map[y + 1, x - 1] != Terrain.None || _map[y, x - 1] != Terrain.None ||
+                                 _map[y - 1, x - 1] != Terrain.None);
+
+                        _map[y, x] = l.TerrainType;
+                        l.XPos = x;
+                        l.YPos = y + 30;
+                        if (l.TerrainType != Terrain.Cave) continue;
+                        var dir = _hy.R.Next(4);
+                        var s = _walkable[_hy.R.Next(_walkable.Length)];
+                        switch (dir)
+                        {
+                            //south
+                            case 0:
+                                _map[y + 1, x] = s;
+                                _map[y + 1, x + 1] = s;
+                                _map[y + 1, x - 1] = s;
+                                _map[y, x - 1] = Terrain.Mountain;
+                                _map[y, x + 1] = Terrain.Mountain;
+                                _map[y - 1, x - 1] = Terrain.Mountain;
+                                _map[y - 1, x] = Terrain.Mountain;
+                                _map[y - 1, x + 1] = Terrain.Mountain;
+                                break;
+                            //west
+                            case 1:
+                                _map[y + 1, x] = Terrain.Mountain;
+                                _map[y + 1, x + 1] = Terrain.Mountain;
+                                _map[y + 1, x - 1] = s;
+                                _map[y, x - 1] = s;
+                                _map[y, x + 1] = Terrain.Mountain;
+                                _map[y - 1, x - 1] = s;
+                                _map[y - 1, x] = Terrain.Mountain;
+                                _map[y - 1, x + 1] = Terrain.Mountain;
+                                break;
+                            //north
+                            case 2:
+                                _map[y + 1, x] = Terrain.Mountain;
+                                _map[y + 1, x + 1] = Terrain.Mountain;
+                                _map[y + 1, x - 1] = Terrain.Mountain;
+                                _map[y, x - 1] = Terrain.Mountain;
+                                _map[y, x + 1] = Terrain.Mountain;
+                                _map[y - 1, x - 1] = s;
+                                _map[y - 1, x] = s;
+                                _map[y - 1, x + 1] = s;
+                                break;
+                            //east
+                            case 3:
+                                _map[y + 1, x] = Terrain.Mountain;
+                                _map[y + 1, x + 1] = s;
+                                _map[y + 1, x - 1] = Terrain.Mountain;
+                                _map[y, x - 1] = Terrain.Mountain;
+                                _map[y, x + 1] = s;
+                                _map[y - 1, x - 1] = Terrain.Mountain;
+                                _map[y - 1, x] = Terrain.Mountain;
+                                _map[y - 1, x + 1] = s;
+                                break;
+                        }
+                    }
+
+                    if (!GrowTerrain())
+                    {
+                        return false;
+                    }
+
                     do
                     {
                         x = _hy.R.Next(_mapCols - 2) + 1;
                         y = _hy.R.Next(_mapRows - 2) + 1;
-                    } while (_map[y, x] != Terrain.None || _map[y - 1, x] != Terrain.None || _map[y + 1, x] != Terrain.None || _map[y + 1, x + 1] != Terrain.None || _map[y, x + 1] != Terrain.None || _map[y - 1, x + 1] != Terrain.None || _map[y + 1, x - 1] != Terrain.None || _map[y, x - 1] != Terrain.None || _map[y - 1, x - 1] != Terrain.None);
+                    } while (!_walkable.Contains(_map[y, x]) || _map[y + 1, x] == Terrain.Cave ||
+                             _map[y - 1, x] == Terrain.Cave || _map[y, x + 1] == Terrain.Cave ||
+                             _map[y, x - 1] == Terrain.Cave);
 
-                    _map[y, x] = l.TerrainType;
-                    l.XPos = x;
-                    l.YPos = y + 30;
-                    if (l.TerrainType != Terrain.Cave) continue;
-                    var dir = _hy.R.Next(4);
-                    var s = _walkable[_hy.R.Next(_walkable.Length)];
-                    switch (dir)
+                    _map[y, x] = Terrain.Rock;
+                    _magicCave.YPos = y + 30;
+                    _magicCave.XPos = x;
+
+                    //check bytes and adjust
+                    WriteBytes(false, 0x665C, 801, 0, 0);
+                }
+
+                WriteBytes(true, 0x665C, 801, 0, 0);
+
+                var loc = 0x7C00 + _bcount;
+                var high = (loc & 0xFF00) >> 8;
+                var low = loc & 0xFF;
+
+                _hy.RomData.Put(0x47A5, (Byte)low);
+                _hy.RomData.Put(0x47A6, (Byte)high);
+
+                _v = new bool[_mapRows, _mapCols];
+                for (var i = 0; i < _mapRows; i++)
+                {
+                    for (var j = 0; j < _mapCols; j++)
                     {
-                        //south
-                        case 0:
-                            _map[y + 1, x] = s;
-                            _map[y + 1, x + 1] = s;
-                            _map[y + 1, x - 1] = s;
-                            _map[y, x - 1] = Terrain.Mountain;
-                            _map[y, x + 1] = Terrain.Mountain;
-                            _map[y - 1, x - 1] = Terrain.Mountain;
-                            _map[y - 1, x] = Terrain.Mountain;
-                            _map[y - 1, x + 1] = Terrain.Mountain;
-                            break;
-                        //west
-                        case 1:
-                            _map[y + 1, x] = Terrain.Mountain;
-                            _map[y + 1, x + 1] = Terrain.Mountain;
-                            _map[y + 1, x - 1] = s;
-                            _map[y, x - 1] = s;
-                            _map[y, x + 1] = Terrain.Mountain;
-                            _map[y - 1, x - 1] = s;
-                            _map[y - 1, x] = Terrain.Mountain;
-                            _map[y - 1, x + 1] = Terrain.Mountain;
-                            break;
-                        //north
-                        case 2:
-                            _map[y + 1, x] = Terrain.Mountain;
-                            _map[y + 1, x + 1] = Terrain.Mountain;
-                            _map[y + 1, x - 1] = Terrain.Mountain;
-                            _map[y, x - 1] = Terrain.Mountain;
-                            _map[y, x + 1] = Terrain.Mountain;
-                            _map[y - 1, x - 1] = s;
-                            _map[y - 1, x] = s;
-                            _map[y - 1, x + 1] = s;
-                            break;
-                        //east
-                        case 3:
-                            _map[y + 1, x] = Terrain.Mountain;
-                            _map[y + 1, x + 1] = s;
-                            _map[y + 1, x - 1] = Terrain.Mountain;
-                            _map[y, x - 1] = Terrain.Mountain;
-                            _map[y, x + 1] = s;
-                            _map[y - 1, x - 1] = Terrain.Mountain;
-                            _map[y - 1, x] = Terrain.Mountain;
-                            _map[y - 1, x + 1] = s;
-                            break;
+                        _v[i, j] = false;
                     }
                 }
 
-                if (!GrowTerrain())
+                for (var i = 0x610C; i < 0x6149; i++)
                 {
-                    return false;
-                }
-                
-                do
-                {
-                    x = _hy.R.Next(_mapCols - 2) + 1;
-                    y = _hy.R.Next(_mapRows - 2) + 1;
-                } while (!_walkable.Contains(_map[y, x]) || _map[y + 1, x] == Terrain.Cave || _map[y - 1, x] == Terrain.Cave || _map[y, x + 1] == Terrain.Cave || _map[y, x - 1] == Terrain.Cave);
-
-                _map[y, x] = Terrain.Rock;
-                _magicCave.YPos = y + 30;
-                _magicCave.XPos = x;
-
-                //check bytes and adjust
-                WriteBytes(false, 0x665C, 801, 0, 0);
-            }
-            WriteBytes(true, 0x665C, 801, 0, 0);
-
-            var loc = 0x7C00 + _bcount;
-            var high = (loc & 0xFF00) >> 8;
-            var low = loc & 0xFF;
-
-            _hy.RomData.Put(0x47A5, (Byte)low);
-            _hy.RomData.Put(0x47A6, (Byte)high);
-
-            _v = new bool[_mapRows, _mapCols];
-            for (var i = 0; i < _mapRows; i++)
-            {
-                for (var j = 0; j < _mapCols; j++)
-                {
-                    _v[i, j] = false;
+                    if (!_terrains.Keys.Contains(i))
+                    {
+                        _hy.RomData.Put(i, 0x00);
+                    }
                 }
             }
-
-            for (var i = 0x610C; i < 0x6149; i++)
+            else
             {
-                if (!_terrains.Keys.Contains(i))
-                {
-                    _hy.RomData.Put(i, 0x00);
-                }
+                if (!_hy.Props.ShuffleAll && !_hy.Props.ShuffleEverythingElse) return true;
+                ShuffleLocations(AllLocations);
+                UpdateLocations();
             }
             return true;
+        }
+
+        public void TransferLocs()
+        {
+            foreach (var l in AllLocations.Where(l => !_hy.Section.ContainsKey(l)))
+            {
+                _hy.Section.Add(l, Section[l.Coords]);
+            }
+        }
+
+        public void UpdateAreas()
+        {
+            try
+            {
+                _hy.AreasByLocation.Add("A", new List<Location>());
+                _hy.AreasByLocation.Add("B", new List<Location>());
+                _hy.AreasByLocation.Add("C", new List<Location>());
+                _hy.AreasByLocation.Add("D", new List<Location>());
+                _hy.AreasByLocation.Add("E", new List<Location>());
+                _hy.AreasByLocation.Add("F", new List<Location>());
+                _hy.AreasByLocation.Add("G", new List<Location>());
+                _hy.AreasByLocation.Add("H", new List<Location>());
+                _hy.AreasByLocation.Add("I", new List<Location>());
+                _hy.AreasByLocation.Add("J", new List<Location>());
+                _hy.AreasByLocation.Add("K", new List<Location>());
+                _hy.AreasByLocation.Add("L", new List<Location>());
+                _hy.AreasByLocation.Add("M", new List<Location>());
+                _hy.AreasByLocation.Add("N", new List<Location>());
+                _hy.AreasByLocation.Add("O", new List<Location>());
+                _hy.AreasByLocation.Add("P", new List<Location>());
+                _hy.AreasByLocation.Add("Q", new List<Location>());
+                _hy.AreasByLocation.Add("hammer3", new List<Location>());
+            }
+            catch
+            {
+
+            }
+
+            foreach (var l in AllLocations)
+            {
+                _hy.AreasByLocation[Section[l.Coords]].Add(GetLocationByCoords(l.Coords));
+            }
         }
 
         public void UpdateVisit()
@@ -292,8 +394,8 @@ namespace Z2Randomizer
                 if (!_connectionsDm.Keys.Contains(l)) continue;
                 var l2 = _connectionsDm[l];
 
-                foreach(var l3 in l2)
-                { 
+                foreach (var l3 in l2)
+                {
                     l3.Reachable = true;
                     _v[l3.YPos - 30, l3.XPos] = true;
                 }

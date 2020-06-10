@@ -258,6 +258,7 @@ namespace RandomizerApp
                 ShuffleItemSprites = ShuffleItemSprites,
                 FunPercentSprites = FunPercentSprites,
                 IsClassicMode = IsClassicMode,
+                AllowTerrainChanges = AllowTerrainChanges,
                 ShuffleAll = ShuffleAll,
                 ShuffleEverythingElse = ShuffleEverythingElse,
                 ShuffleTowns = ShuffleTowns,

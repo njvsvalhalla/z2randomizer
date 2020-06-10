@@ -274,7 +274,8 @@
             ])
         );
 
-        flagStr += flag(BitArray([getFlagId(65), getFlagId(66)]));
+        flagStr += flag(BitArray([getFlagId(65), getFlagId(66), getFlagId(67), getFlagId(68), getFlagId(69), getFlagId(70)]));
+        flagStr += flag(BitArray([getFlagId(71), getFlagId(72), getFlagId(73)]));
         $("#flags").val(flagStr);
     }
 
@@ -450,15 +451,42 @@
         if (val[18] === undefined) {
             setValue(65, false);
             setValue(66, false);
+            setValue(67, false);
+            setValue(68, false);
+            setValue(69, false);
+            setValue(70, false);
+
         } else {
             v = getBitArray(indexOf(val[18]));
             var dontProcess = false;
-            if (v[0] && v[1])
+            if (v[0] && v[1] && v[2] && v[3] && v[4] && v[5])
                 dontProcess = true;
 
             if (!dontProcess) {
                 setValue(65, v[0]);
                 setValue(66, v[1]);
+                setValue(67, v[2]);
+                setValue(68, v[3]);
+                setValue(69, v[4]);
+                setValue(70, v[5]);
+            }
+        }
+
+        if (val[19] === undefined) {
+            setValue(71, false);
+            setValue(72, false);
+            setValue(73, false);
+
+        } else {
+            v = getBitArray(indexOf(val[19]));
+            var dontProcess = false;
+            if (v[0] && v[1] && v[2])
+                dontProcess = true;
+
+            if (!dontProcess) {
+                setValue(71, v[0]);
+                setValue(72, v[1]);
+                setValue(73, v[2]);
             }
         }
       
@@ -569,8 +597,17 @@
     $("#SettingsModel_ManuallySelectDrops").change(function () {
         manuallySelectDrops();
     });
+
     $("#SettingsModel_StandardizeDrops").change(function () {
         manuallySelectDrops();
+    });
+
+    $("#SettingsModel_IsClassicMode").change(function () {
+        mixOverworldClassicRando();
+    });
+
+    $("#SettingsModel_ShuffleAll").change(function () {
+        setShuffleAll();
     });
 
     function shuffleStartingItems() {
@@ -690,6 +727,43 @@
         }
     }
 
+    function setShuffleAll() {
+        if (document.getElementById("SettingsModel_AllowTerrainChanges").checked) {
+            //not working but shouldn't really matter as long as it's checked
+            $(".flag70").attr("disabled", true);
+            $(".flag71").attr("disabled", true);
+            $(".flag72").attr("disabled", true);
+            $(".flag73").attr("disabled", true);
+        } else {
+            $(".flag70").attr("disabled", false);
+            $(".flag71").attr("disabled", false);
+            $(".flag72").attr("disabled", false);
+            $(".flag73").attr("disabled", false);
+        }
+    }
+
+    function mixOverworldClassicRando()
+    {
+        if (document.getElementById("SettingsModel_IsClassicMode").checked) {
+            $(".classic").show();
+
+            $(".newRando").hide();
+            $(".newRandoBoxes").prop("checked", false);
+
+        } else {
+            $(".classicBoxes").prop("checked", false);
+            $(".classic").hide();
+
+            $(".newRando").show();
+
+            setSelectedIndex("#SettingsModel_HiddenPalace", 0);
+            setSelectedIndex("#SettingsModel_HiddenKasuto", 0);
+
+            //force generate flags
+            generateFlags();
+        }
+    }
+
     function manuallySelectDrops() {
         if (document.getElementById("SettingsModel_ManuallySelectDrops").checked || document.getElementById("SettingsModel_StandardizeDrops").checked) {
             $(".itemDrops").attr("disabled", false);
@@ -719,6 +793,7 @@
         shuffleStartingSpells();
         allowPalacesToSwapContinents();
         shuffleEncounters();
+        mixOverworldClassicRando();
         checkForMixOverworldShuffle();
         removeThunderbird();
         shufflePalaceRooms();
@@ -727,6 +802,7 @@
         shuffleOverworldEnemies();
         shuffleOverworldItems();
         manuallySelectDrops();
+        setShuffleAll();
     }
 
     updateEverything();

@@ -138,5 +138,14 @@ namespace Z2Randomizer
         public string CharacterSprite { get; set; }
         public string TunicColor { get; set; }
         public string ShieldTunicColor { get; set; }
+
+        //Classic Mode
+        public bool IsClassicMode { get; set; }
+        public bool ShuffleAll { get; set; }
+        public bool ShuffleStartSpot { get; set; }
+        public bool ShuffleTowns { get; set; }
+        public bool ShufflePalaces { get; set; }
+        public bool ShuffleEverythingElse { get; set; }
+        public bool AllowTerrainChanges { get; set; }
     }
 }

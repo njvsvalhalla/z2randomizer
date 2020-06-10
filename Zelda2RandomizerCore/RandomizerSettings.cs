@@ -146,6 +146,15 @@ namespace RandomizerApp
         public TunicColor ShieldTunicColor { get; set; } = TunicColor.Orange;
         public BeamSprite BeamSprite { get; set; } = BeamSprite.Default;
 
+        //clasicc rando options
+        public bool IsClassicMode { get; set; }
+        public bool ShuffleAll { get; set; }
+        public bool ShuffleStartSpot { get; set; }
+        public bool ShuffleTowns { get; set; }
+        public bool ShufflePalaces { get; set; }
+        public bool ShuffleEverythingElse { get; set; }
+        public bool AllowTerrainChanges { get; set; }
+
         public string ToJson() => JsonConvert.SerializeObject(this);
         public static int GenerateSeed() => (new Random()).Next(1000000000);
 
@@ -247,7 +256,13 @@ namespace RandomizerApp
                 FreeMagicEffectiveness = (MagicEffectiveness == MagicEffectiveness.Free),
                 TunicColor = TunicColor.GetStringValue(),
                 ShuffleItemSprites = ShuffleItemSprites,
-                FunPercentSprites = FunPercentSprites
+                FunPercentSprites = FunPercentSprites,
+                IsClassicMode = IsClassicMode,
+                ShuffleAll = ShuffleAll,
+                ShuffleEverythingElse = ShuffleEverythingElse,
+                ShuffleTowns = ShuffleTowns,
+                ShufflePalaces = ShufflePalaces,
+                ShuffleStartSpot = ShuffleStartSpot
             };
             ItemPoolPopulate(LargeEnemyPool, EnemySize.Large, ref properties);
             ItemPoolPopulate(SmallEnemyPool, EnemySize.Small, ref properties);
@@ -472,10 +487,21 @@ namespace RandomizerApp
             v.CopyTo(array, 0);
             flagStr = flagStr + flags[array[0]];
 
-            v = new BitArray(2);
+            v = new BitArray(6);
             v[0] = ShuffleItemSprites;
             v[1] = FunPercentSprites;
+            v[2] = IsClassicMode;
+            v[3] = ShuffleAll;
+            v[4] = AllowTerrainChanges;
+            v[5] = ShuffleStartSpot;
             v.CopyTo(array,0);
+            flagStr = flagStr + flags[array[0]];
+
+            v = new BitArray(3);
+            v[0] = ShuffleTowns;
+            v[1] = ShufflePalaces;
+            v[2] = ShuffleEverythingElse;
+            v.CopyTo(array, 0);
             flagStr = flagStr + flags[array[0]];
 
             return flagStr;
@@ -677,6 +703,19 @@ namespace RandomizerApp
             w.CopyTo(array, 0);
             HintType = (HintType)array[0];
 
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[18]) });
+            ShuffleItemSprites = v[0];
+            FunPercentSprites = v[1];
+            IsClassicMode = v[2];
+            ShuffleAll = v[3];
+            AllowTerrainChanges = v[4];
+            ShuffleStartSpot = v[5];
+
+            v = new BitArray(new int[] { flags.IndexOf(inputFlags[19]) });
+            ShuffleTowns = v[0];
+            ShufflePalaces = v[1];
+            ShuffleEverythingElse = v[2];
+
             if (GenerateFlags() != inputFlags)
                 throw new Exception("Did not calculate flags correctly :(");
         }
@@ -741,3 +780,4 @@ namespace RandomizerApp
         }
     }
 }
+ 

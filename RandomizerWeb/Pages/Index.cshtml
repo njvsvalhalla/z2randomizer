@@ -6,17 +6,18 @@
     ViewData["Title"] = "Zelda II Randomizer";
 }
 
-    <div class="hero grid-full-width">
-        <h1 class="z2r-logo">
-            <img width="375" height="182" src="~/img/blank.png" alt="Zelda II the Adventure of Link Randomizer" />
-        </h1>
-        <div class="alter-contain">
-            <div class="fire-image"></div>
-            <div class="alter-image"></div>
-        </div>
+<div class="hero grid-full-width">
+    <h1 class="z2r-logo">
+        <img width="375" height="182" src="~/img/blank.png" alt="Zelda II the Adventure of Link Randomizer" />
+    </h1>
+    <div class="alter-contain">
+        <div class="fire-image"></div>
+        <div class="alter-image"></div>
     </div>
+</div>
 
-@if (Model.Environment == "DEV") {
+@if (Model.Environment == "DEV")
+{
     <div class="card grid-full-width">
         <div class="card-body">
             <h1>This is the dev/staging ground! If you want stable (what is in master) <a href="https://zeldaiirandomizer.com">click here!</a></h1>
@@ -62,35 +63,35 @@
         </div>
         <div class="card-body text-left">
 
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartingItems, new {@class = "flag1 usedForFlags", @data_toggle = "tooltip", @title = "Each item has a 25% chance of being in your inventory"})
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartingItems, new { @class = "flag1 usedForFlags", @data_toggle = "tooltip", @title = "Each item has a 25% chance of being in your inventory" })
             @Html.LabelFor(m => m.SettingsModel.ShuffleStartingItems, "Shuffle Starting Items")
 
             <div class="or">or</div>
 
             <h6>Start with:</h6>
             <div class="item-options two-columns">
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCandle, new {@class = "startingItem flag2 usedForFlags", @data_toggle = "tooltip", @title = "Each spell has a 25% chance of being known"})
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCandle, new { @class = "startingItem flag2 usedForFlags", @data_toggle = "tooltip", @title = "Each spell has a 25% chance of being known" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithCandle, "Candle")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithGlove, new {@class = "startingItem flag3 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithGlove, new { @class = "startingItem flag3 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithGlove, "Glove")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithRaft, new {@class = "startingItem flag4 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithRaft, new { @class = "startingItem flag4 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithRaft, "Raft")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithBoots, new {@class = "startingItem flag5 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithBoots, new { @class = "startingItem flag5 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithBoots, "Boots")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithFlute, new {@class = "startingItem flag7 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithFlute, new { @class = "startingItem flag7 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithFlute, "Flute")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCross, new {@class = "startingItem flag8 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithCross, new { @class = "startingItem flag8 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithCross, "Cross")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithHammer, new {@class = "startingItem flag9 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithHammer, new { @class = "startingItem flag9 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithHammer, "Hammer")
-                <br/>
-                @Html.CheckBoxFor(m => m.SettingsModel.StartWithMagicKey, new {@class = "startingItem flag10 usedForFlags"})
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.StartWithMagicKey, new { @class = "startingItem flag10 usedForFlags" })
                 @Html.LabelFor(m => m.SettingsModel.StartWithMagicKey, "Key")
             </div>
         </div>
@@ -146,7 +147,7 @@
             <br />
             @Html.CheckBoxFor(m => m.SettingsModel.RandomizeNumberOfLives, new { @class = "flag22 usedForFlags", @data_toggle = "tooltip", @title = "Start with anywhere from 2-5 lives" })
             @Html.LabelFor(m => m.SettingsModel.RandomizeNumberOfLives, "Random Number Of Lives")
-            <br/>
+            <br />
             @Html.LabelFor(m => m.SettingsModel.StartingHeartContainers, "Starting Heart Containers")
             <select class="custom-select usedForFlags" asp-for="SettingsModel.StartingHeartContainers" asp-items="Html.GetEnumSelectList<Enums.Containers>()"></select>
             <br />
@@ -167,24 +168,51 @@
             Overworld
         </div>
         <div class="card-body">
-            @Html.CheckBoxFor(m => m.SettingsModel.AllowPalacesToSwapContinents, new { @class = "flag31 usedForFlags", @data_toggle = "tooltip", @title = "When selected, palaces can move from their normal continents. Palace 1 could be found on Maze Island or East Hyrule, for example." })
-            @Html.LabelFor(m => m.SettingsModel.AllowPalacesToSwapContinents, "Allow Palaces To Swap Continents")
+            @Html.CheckBoxFor(m => m.SettingsModel.IsClassicMode, new { @class = "flag67 usedForFlags", @data_toggle = "tooltip", @title = "Don't generate a new map - like old rando versions." })
+            @Html.LabelFor(m => m.SettingsModel.ShuffleAll, "Don't Randomize map")
             <br />
-            @Html.CheckBoxFor(m => m.SettingsModel.IncludeGreatPalaceInShuffle, new { @class = "greatPalaceInShuffle flag27 usedForFlags", @disabled = "disabled" })
-            @Html.LabelFor(m => m.SettingsModel.IncludeGreatPalaceInShuffle, "Include Great Palace In Shuffle")
-            <br />
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEncounters, new { @class = "flag29 usedForFlags", @data_toggle = "tooltip", @title = "When selected, palace 7 does not have to be in the valley of death." })
-            @Html.LabelFor(m => m.SettingsModel.ShuffleEncounters, "Shuffle Encounters")
-            <br />
-            @Html.CheckBoxFor(m => m.SettingsModel.AllowUnsafePathEncounters, new { @class = "unsafePathEncounters flag32 usedForFlags", @disabled = "disabled", @data_toggle = "tooltip", @title = "If checked, you may have enemies in path encounters" })
-            @Html.LabelFor(m => m.SettingsModel.AllowUnsafePathEncounters, "Allow Unsafe Path Encounters")
-            <br />
-            @Html.LabelFor(m => m.SettingsModel.HiddenPalace, "Hidden Palace")
-            <select class="custom-select usedForFlags" asp-for="SettingsModel.HiddenPalace" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()" data-toggle="tooltip" title="When selected, will include three eye rock on the overworld"></select>
-            <br />
-            @Html.LabelFor(m => m.SettingsModel.HiddenKasuto, "Hidden Kasuto")
-            <select class="custom-select usedForFlags" asp-for="SettingsModel.HiddenKasuto" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()" data-toggle="tooltip" title="When selected, will hide Kasuto behind a forest tile"></select>
-            <br />
+            <div class="newRando">
+
+                @Html.CheckBoxFor(m => m.SettingsModel.AllowPalacesToSwapContinents, new { @class = "flag31 newRandoBoxes usedForFlags", @data_toggle = "tooltip", @title = "When selected, palaces can move from their normal continents. Palace 1 could be found on Maze Island or East Hyrule, for example." })
+                @Html.LabelFor(m => m.SettingsModel.AllowPalacesToSwapContinents, "Allow Palaces To Swap Continents")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.IncludeGreatPalaceInShuffle, new { @class = "newRandoBoxes greatPalaceInShuffle flag27 usedForFlags", @disabled = "disabled" })
+                @Html.LabelFor(m => m.SettingsModel.IncludeGreatPalaceInShuffle, "Include Great Palace In Shuffle")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEncounters, new { @class = "newRandoBoxesf flag29 usedForFlags", @data_toggle = "tooltip", @title = "When selected, palace 7 does not have to be in the valley of death." })
+                @Html.LabelFor(m => m.SettingsModel.ShuffleEncounters, "Shuffle Encounters")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.AllowUnsafePathEncounters, new { @class = "newRandoBoxes unsafePathEncounters flag32 usedForFlags", @disabled = "disabled", @data_toggle = "tooltip", @title = "If checked, you may have enemies in path encounters" })
+                @Html.LabelFor(m => m.SettingsModel.AllowUnsafePathEncounters, "Allow Unsafe Path Encounters")
+                <br />
+                @Html.LabelFor(m => m.SettingsModel.HiddenPalace, "Hidden Palace")
+                <select class="custom-select usedForFlags" asp-for="SettingsModel.HiddenPalace" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()" data-toggle="tooltip" title="When selected, will include three eye rock on the overworld"></select>
+                <br />
+                @Html.LabelFor(m => m.SettingsModel.HiddenKasuto, "Hidden Kasuto")
+                <select class="custom-select usedForFlags" asp-for="SettingsModel.HiddenKasuto" asp-items="Html.GetEnumSelectList<Enums.HiddenOptions>()" data-toggle="tooltip" title="When selected, will hide Kasuto behind a forest tile"></select>
+
+            </div>
+            <div class="classic">
+                @Html.CheckBoxFor(m => m.SettingsModel.AllowTerrainChanges, new { @class = "flag69 classicBoxes usedForFlags", @data_toggle = "tooltip", @title = "When checked, palaces can be caves, towns can be palaces, etc" })
+                @Html.LabelFor(m => m.SettingsModel.AllowTerrainChanges, "Allow Terrain Changes")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.ShuffleAll, new {@class = "flag68 classicBoxes usedForFlags", @data_toggle = "tooltip", @title = "Shuffle all overworld locations"})
+                @Html.LabelFor(m => m.SettingsModel.ShuffleAll, "Shuffle All")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.ShuffleStartSpot, new {@class = "flag70 shuffleBoxes classicBoxes usedForFlags", @data_toggle = "tooltip", @title = "Shuffle where link starts"})
+                @Html.LabelFor(m => m.SettingsModel.ShuffleStartSpot, "Shuffle Starting Spot")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.ShuffleTowns, new {@class = "flag71 shuffleBoxes classicBoxes classicBoxesusedForFlags", @data_toggle = "tooltip", @title = "Shuffle towns"})
+                @Html.LabelFor(m => m.SettingsModel.ShuffleTowns, "Shuffle Towns")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.ShufflePalaces, new {@class = "flag72 shuffleBoxes classicBoxes usedForFlags", @data_toggle = "tooltip", @title = "Shuffle Palaces"})
+                @Html.LabelFor(m => m.SettingsModel.ShufflePalaces, "Shuffle Palaces")
+                <br />
+                @Html.CheckBoxFor(m => m.SettingsModel.ShuffleEverythingElse, new {@class = "flag73 classicBoxes shuffleBoxes usedForFlags", @data_toggle = "tooltip", @title = "Shuffle everything else"})
+                @Html.LabelFor(m => m.SettingsModel.ShuffleEverythingElse, "Shuffle Everything Else")
+                <br />
+            </div>
+
         </div>
     </div>
     <div class="card palaces">
@@ -307,11 +335,11 @@
         </div>
         <div class="card-body">
 
-            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @class="usedForFlags flag65 itemSpriteShuffle", @data_toggle = "tooltip", @title = "All item sprites (excluding Medicine etc) and drops been shuffled!" })
+            @Html.CheckBoxFor(m => m.SettingsModel.ShuffleItemSprites, new { @class = "usedForFlags flag65 itemSpriteShuffle", @data_toggle = "tooltip", @title = "All item sprites (excluding Medicine etc) and drops been shuffled!" })
             @Html.LabelFor(m => m.SettingsModel.ShuffleItemSprites, "Shuffle Item Sprites")
             <br />
 
-            @Html.CheckBoxFor(m => m.SettingsModel.FunPercentSprites, new { @class="usedForFlags flag66 funPercent", @data_toggle = "tooltip", @title = "All drops (except one ups) and items are replaced with a question mark! You won't know what you're getting." })
+            @Html.CheckBoxFor(m => m.SettingsModel.FunPercentSprites, new { @class = "usedForFlags flag66 funPercent", @data_toggle = "tooltip", @title = "All drops (except one ups) and items are replaced with a question mark! You won't know what you're getting." })
             @Html.LabelFor(m => m.SettingsModel.FunPercentSprites, "Fun% Sprites")
             <br />
 

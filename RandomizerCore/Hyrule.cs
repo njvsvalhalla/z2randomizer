@@ -106,6 +106,7 @@ namespace Z2Randomizer
         public bool _hiddenPalace;
         public bool _hiddenKasuto;
         private List<int> _visitedEnemies;
+        public Dictionary<Location, string> Section;
 
         private WestHyrule _westHyrule;
         private EastHyrule _eastHyrule;
@@ -113,6 +114,8 @@ namespace Z2Randomizer
         private DeathMountain _deathMountain;
         private List<World> _worlds;
         private List<Palace> _palaces;
+
+        public SortedDictionary<string, List<Location>> AreasByLocation { get; set; }
 
         public Rom RomData { get; set; }
 
@@ -1539,6 +1542,188 @@ namespace Z2Randomizer
 
             return (CanGet(_westHyrule._palaceOne) && CanGet(_westHyrule._palaceTwo) && CanGet(_westHyrule._palaceThree) && CanGet(_mazeIsland._palace4) && CanGet(_eastHyrule._palace5) && CanGet(_eastHyrule._palace6) && CanGet(_eastHyrule._gp) && CanGet(_itemLocs));
         }
+        
+        protected Dictionary<Location, List<Location>> connections;
+
+        private void updateConnections()
+        {
+            connections = new Dictionary<Location, List<Location>>();
+            foreach (Location l in _eastHyrule._connections.Keys)
+            {
+                connections[l] = new List<Location>() { _eastHyrule._connections[l] };
+            }
+            foreach (Location l in _westHyrule._connections.Keys)
+            {
+                connections[l] = new List<Location>() { _westHyrule._connections[l] };
+            }
+            foreach (Location l in _deathMountain._connectionsDm.Keys)
+            {
+                connections[l] = _deathMountain._connectionsDm[l];
+            }
+        }
+
+        public Boolean everythingReachable()
+        {
+            var magContainers = 4;
+            var reachableAreas = new HashSet<string>();
+
+            updateConnections();
+            if (connections.ContainsKey(AreasByLocation["hammer"][0]) 
+                || connections.ContainsKey(AreasByLocation["hammer0"][0]) 
+                || connections.ContainsKey(AreasByLocation["boots1"][0]))
+            {
+                return false;
+            }
+
+            if (Section[_westHyrule._hammerEnter].Equals("hammer")
+                || Section[_westHyrule._hammerEnter].Equals("hammer0") 
+                || Section[_westHyrule._hammerExit].Equals("hammer") 
+                || Section[_westHyrule._hammerExit].Equals("hammer0") 
+                || Section[_deathMountain._hammerEnter].Equals("hammer3") 
+                || Section[_deathMountain._hammerExit].Equals("hammer3"))
+            {
+                return false;
+            }
+            reachableAreas.Add(Section[_westHyrule._start]);
+            int numReachable = reachableAreas.Count;
+            int newNum = 0;
+
+            while (newNum != numReachable)
+            {
+                numReachable = reachableAreas.Count;
+                List<String> vals = reachableAreas.ToList();
+                updateConnections();
+                foreach (String s in vals)
+                {
+                    if ((s.Equals("north") || s.Equals("mid") || s.Equals("grave") || s.Equals("hammer"))
+                        && _itemGet[(int)Items.Hammer])
+                    {
+                        reachableAreas.Add("north");
+                        reachableAreas.Add("mid");
+                        reachableAreas.Add("grave");
+                        reachableAreas.Add("hammer");
+                        reachableAreas.Add("hammer0");
+                    }
+                    foreach (Location l in AreasByLocation[s])
+                    {
+                        if (connections.Keys.Contains(l))
+                        {
+
+                            List<Location> exitPoint = connections[l];
+
+                            foreach (Location l2 in exitPoint)
+                            {
+                                String exitSection = Section[l2];
+
+                                if (l.NeedBagu && (CanGet(_westHyrule._bagu) || _spellGet[(int)Spells.Fairy]))
+                                {
+                                    reachableAreas.Add(exitSection);
+                                }
+
+                                if (exitSection.Equals("hammer") && _itemGet[(int)Items.Hammer])
+                                {
+                                    reachableAreas.Add(exitSection);
+                                }
+
+                                if (l.NeedFairy && _spellGet[(int)Spells.Fairy])
+                                {
+                                    reachableAreas.Add(exitSection);
+                                }
+
+                                if (l.NeedJump && _spellGet[(int)Spells.Jump])
+                                {
+                                    reachableAreas.Add(exitSection);
+                                }
+
+                                if (!l.NeedFairy && !l.NeedBagu && !l.NeedJump)
+                                {
+                                    reachableAreas.Add(exitSection);
+                                }
+                            }
+                        }
+
+                        if ((s.Equals("north2") || s.Equals("mid2")) && _itemGet[(int)Items.Boots])
+                        {
+                            reachableAreas.Add("north2");
+                            reachableAreas.Add("mid2");
+                            reachableAreas.Add("boots");
+                            reachableAreas.Add("boots1");
+                        }
+                        if (s.Equals("mid2") && _itemGet[(int)Items.Horn])
+                        {
+                            reachableAreas.Add("south");
+                        }
+                        if (s.Equals("south") && _itemGet[(int)Items.Horn])
+                        {
+                            reachableAreas.Add("mid2");
+                        }
+                        if (s.Equals("mid2") && _itemGet[(int)Items.Hammer])
+                        {
+                            reachableAreas.Add("hammer2");
+                        }
+
+                        if (s.Equals("P") && _itemGet[(int)Items.Hammer])
+                        {
+                            reachableAreas.Add("hammer3");
+                        }
+
+                        if (CanGet(_westHyrule._raftSpot) && _itemGet[(int)Items.Raft])
+                        {
+                            reachableAreas.Add(Section[_eastHyrule._start]);
+                        }
+
+                        if (CanGet(_westHyrule._hammerEnter))
+                        {
+                            reachableAreas.Add(Section[_deathMountain._hammerEnter]);
+                        }
+
+                        if (CanGet(_westHyrule._hammerExit))
+                        {
+                            reachableAreas.Add(Section[_deathMountain._hammerExit]);
+                        }
+
+                        if (CanGet(_deathMountain._hammerEnter))
+                        {
+                            reachableAreas.Add(Section[_westHyrule._hammerEnter]);
+                        }
+
+                        if (CanGet(_deathMountain._hammerExit))
+                        {
+                            reachableAreas.Add(Section[_westHyrule._hammerExit]);
+                        }
+                    }
+                }
+                newNum = reachableAreas.Count;
+                UpdateItems();
+                UpdateSpells();
+            }
+            for (int i = 0; i < 8; i++)
+            {
+                if (!_itemGet[i])
+                {
+                    return false;
+                }
+            }
+            for (int i = 19; i < 22; i++)
+            {
+                if (!_itemGet[i])
+                {
+                    return false;
+                }
+            }
+            if (magContainers != 8)
+            {
+                return false;
+            }
+            for (int i = 0; i < _spellGet.Count(); i++)
+            {
+                if (!_spellGet[i])
+                {
+                    return false;
+                }
+            }
+            return reachableAreas.Count == 35;
+        }
 
         private bool CanGet(List<Location> l)
         {
@@ -1820,25 +2005,57 @@ namespace Z2Randomizer
             bool f = false;
             do
             {
+                Section = new Dictionary<Location, string>();
+                AreasByLocation = new SortedDictionary<string, List<Location>>();
                 _worlds = new List<World>();
                 _westHyrule = new WestHyrule(this);
+
+                if (Props.IsClassicMode)
+                {
+                    _westHyrule.TransferLocs();
+                    _westHyrule.UpdateAreas();
+                }
+
                 do
                 {
                     f = _westHyrule.Terraform();
                 } while (!f);
+
 
                 _deathMountain = new DeathMountain(this);
                 do
                 {
                     f = _deathMountain.Terraform();
                 } while (!f);
+
+                if (Props.IsClassicMode)
+                {
+                    _deathMountain.TransferLocs();
+                    _deathMountain.UpdateAreas();
+                }
+
                 _eastHyrule = new EastHyrule(this);
+
+                if (Props.IsClassicMode)
+                {
+                    _eastHyrule.TransferLocs();
+                    _eastHyrule.UpdateAreas();
+                }
+
                 do
                 {
                     f = _eastHyrule.Terraform();
                 } while (!f);
                 _mazeIsland = new MazeIsland(this);
                 _mazeIsland.Terraform();
+
+                _westHyrule.TransferLocs();
+                _eastHyrule.TransferLocs();
+                _deathMountain.TransferLocs();
+                _westHyrule.UpdateAreas();
+                _eastHyrule.UpdateAreas();
+                _deathMountain.UpdateAreas();
+
                 LoadItemLocs();
                 ShuffleSpells();
                 ShuffleItems();
@@ -1847,43 +2064,47 @@ namespace Z2Randomizer
                 ShuffleTowns();
 
                 int x = 0;
-                while (!EverythingReachable2() && x < 50)
+                if (!Props.IsClassicMode)
                 {
-
-                    foreach (Location l in _westHyrule.AllLocations)
+                    while (!EverythingReachable2() && x < 50)
                     {
-                        l.Reachable = false;
-                    }
 
-                    foreach (Location l in _eastHyrule.AllLocations)
-                    {
-                        l.Reachable = false;
-                    }
+                        foreach (Location l in _westHyrule.AllLocations)
+                        {
+                            l.Reachable = false;
+                        }
 
-                    foreach (Location l in _mazeIsland.AllLocations)
-                    {
-                        l.Reachable = false;
-                    }
+                        foreach (Location l in _eastHyrule.AllLocations)
+                        {
+                            l.Reachable = false;
+                        }
 
-                    foreach (Location l in _deathMountain.AllLocations)
-                    {
-                        l.Reachable = false;
-                    }
-                    _eastHyrule._newKasuto2.Reachable = false;
-                    _eastHyrule._palace4.Reachable = false;
-                    _westHyrule.Reset();
-                    _eastHyrule.Reset();
-                    _mazeIsland.Reset();
-                    LoadItemLocs();
-                    _deathMountain.Reset();
-                    _westHyrule.SetStart();
-                    ShuffleSpells();
-                    ShuffleItems();
-                    ShufflePalaces();
-                    LoadItemLocs();
+                        foreach (Location l in _mazeIsland.AllLocations)
+                        {
+                            l.Reachable = false;
+                        }
 
-                    x++;
+                        foreach (Location l in _deathMountain.AllLocations)
+                        {
+                            l.Reachable = false;
+                        }
+                        _eastHyrule._newKasuto2.Reachable = false;
+                        _eastHyrule._palace4.Reachable = false;
+                        _westHyrule.Reset();
+                        _eastHyrule.Reset();
+                        _mazeIsland.Reset();
+                        LoadItemLocs();
+                        _deathMountain.Reset();
+                        _westHyrule.SetStart();
+                        ShuffleSpells();
+                        ShuffleItems();
+                        ShufflePalaces();
+                        LoadItemLocs();
+
+                        x++;
+                    }
                 }
+
                 int west = 0;
                 if (x != 50)
                 {
@@ -1928,7 +2149,7 @@ namespace Z2Randomizer
                 Console.WriteLine("er: " + east);
                 Console.WriteLine("dm: " + dm);
                 Console.WriteLine("maze: " + maze);
-            } while (!EverythingReachable2());
+            } while ((Props.IsClassicMode) ? !everythingReachable() : !EverythingReachable2());
 
             _worlds.Add(_westHyrule);
             _worlds.Add(_eastHyrule);

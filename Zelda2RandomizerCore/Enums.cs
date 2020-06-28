@@ -96,7 +96,9 @@ namespace RandomizerApp
             Olympia,
             Miria,
             Dragonlord,
-            Crystalis
+            Crystalis,
+            [StringValue("Zero Suit Samus")]
+            ZeroSuitSamus
         }
 
         public enum TunicColor

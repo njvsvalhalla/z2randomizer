@@ -2049,12 +2049,15 @@ namespace Z2Randomizer
                 _mazeIsland = new MazeIsland(this);
                 _mazeIsland.Terraform();
 
-                _westHyrule.TransferLocs();
-                _eastHyrule.TransferLocs();
-                _deathMountain.TransferLocs();
-                _westHyrule.UpdateAreas();
-                _eastHyrule.UpdateAreas();
-                _deathMountain.UpdateAreas();
+                if (Props.IsClassicMode)
+                {
+                    _westHyrule.TransferLocs();
+                    _eastHyrule.TransferLocs();
+                    _deathMountain.TransferLocs();
+                    _westHyrule.UpdateAreas();
+                    _eastHyrule.UpdateAreas();
+                    _deathMountain.UpdateAreas();
+                }
 
                 LoadItemLocs();
                 ShuffleSpells();
@@ -4029,6 +4032,9 @@ namespace Z2Randomizer
                     break;
                 case "Crystalis":
                     spriteObj = new CrystalisSprite();
+                    break;
+                case "Zero Suit Samus":
+                    spriteObj = new ZeroSuitSamusSprite();
                     break;
             }
 
